@@ -1,6 +1,7 @@
 [
   {
     "id": "refuerzo-primaria",
+    "interes": "Refuerzo escolar",
     "nombre": "Refuerzo escolar Primaria",
     "nivel": "1.º a 6.º de Primaria",
     "horas": 2,
@@ -12,6 +13,7 @@
   },
   {
     "id": "refuerzo-eso",
+    "interes": "Refuerzo escolar",
     "nombre": "Refuerzo escolar ESO",
     "nivel": "1.º a 4.º de ESO",
     "horas": 2,
@@ -23,6 +25,7 @@
   },
   {
     "id": "refuerzo-bachillerato",
+    "interes": "Refuerzo escolar",
     "nombre": "Refuerzo escolar Bachillerato",
     "nivel": "1.º y 2.º de Bachillerato",
     "horas": 2,
@@ -34,6 +37,7 @@
   },
   {
     "id": "ingles-grupo",
+    "interes": "Inglés",
     "nombre": "Inglés en grupo",
     "nivel": "Niveles A1 a C1",
     "horas": 2,
@@ -45,6 +49,7 @@
   },
   {
     "id": "cambridge-b2",
+    "interes": "Cambridge",
     "nombre": "Preparación Cambridge B2 First",
     "nivel": "Nivel B2",
     "horas": 3,
@@ -56,6 +61,7 @@
   },
   {
     "id": "particulares",
+    "interes": "Clases particulares",
     "nombre": "Clases particulares",
     "nivel": "Cualquier materia (1 alumno)",
     "horas": 1,

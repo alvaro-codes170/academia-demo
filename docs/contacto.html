@@ -80,11 +80,125 @@
     <section class="seccion seccion--clara" id="clase-prueba" aria-labelledby="titulo-prueba">
       <div class="contenedor contenedor--estrecho">
         <h2 id="titulo-prueba" class="seccion__titulo">Pide tu clase de prueba</h2>
-        <p>La primera clase es gratis y sin compromiso. Muy pronto podrás pedirla desde aquí con un formulario. Mientras tanto, llámanos o escríbenos por WhatsApp y te respondemos en horario de atención.</p>
-        <div class="botones">
-          <a class="boton boton--acento" href="tel:+34600000005">Llamar al 600 000 005</a>
-          <a class="boton boton--borde" href="https://wa.me/34600000005" rel="noopener">Escribir por WhatsApp</a>
-        </div>
+        <p>La primera clase es gratis y sin compromiso. Rellena el formulario y te escribimos para concretar el día. Los campos marcados con <span aria-hidden="true">*</span><span class="visualmente-oculto">asterisco</span> son obligatorios.</p>
+
+        <form class="formulario" id="formulario-prueba" action="https://formspree.io/f/TU_ID" method="POST">
+          <input type="hidden" name="_subject" value="Nueva solicitud de clase de prueba">
+
+          <!-- Antispam: las personas no ven este campo; los robots suelen rellenarlo. -->
+          <div class="trampa" aria-hidden="true">
+            <label for="campo-web">No rellenes este campo</label>
+            <input type="text" id="campo-web" name="_gotcha" tabindex="-1" autocomplete="off">
+          </div>
+
+          <fieldset class="grupo">
+            <legend>Persona de contacto</legend>
+            <div class="campo">
+              <label for="nombre">Nombre y apellidos <span aria-hidden="true">*</span></label>
+              <input type="text" id="nombre" name="Nombre y apellidos" autocomplete="name" required minlength="3" aria-describedby="error-nombre">
+              <p class="campo__error" id="error-nombre"></p>
+            </div>
+            <div class="campo">
+              <label for="email">Correo electrónico <span aria-hidden="true">*</span></label>
+              <input type="email" id="email" name="email" autocomplete="email" required aria-describedby="error-email">
+              <p class="campo__error" id="error-email"></p>
+            </div>
+            <div class="campo">
+              <label for="telefono">Teléfono <span aria-hidden="true">*</span></label>
+              <input type="tel" id="telefono" name="Teléfono" autocomplete="tel" inputmode="tel" required pattern="[0-9 +]{9,15}" aria-describedby="ayuda-telefono error-telefono">
+              <p class="campo__ayuda" id="ayuda-telefono">Solo números. Ejemplo: 600 000 000</p>
+              <p class="campo__error" id="error-telefono"></p>
+            </div>
+          </fieldset>
+
+          <fieldset class="grupo">
+            <legend>Alumno o alumna</legend>
+            <div class="campo">
+              <label for="alumno">Nombre del alumno o alumna <span aria-hidden="true">*</span></label>
+              <input type="text" id="alumno" name="Nombre del alumno" required minlength="2" aria-describedby="error-alumno">
+              <p class="campo__error" id="error-alumno"></p>
+            </div>
+            <div class="campo">
+              <label for="edad">Edad o curso <span aria-hidden="true">*</span></label>
+              <select id="edad" name="Edad" required aria-describedby="error-edad">
+                <option value="">Elige una opción</option>
+                <option value="Menor de 14 años">Menor de 14 años</option>
+                <option value="14 a 17 años">14 a 17 años</option>
+                <option value="Adulto">Adulto</option>
+              </select>
+              <p class="campo__error" id="error-edad"></p>
+            </div>
+
+            <div class="tutor" id="bloque-tutor">
+              <p class="tutor__aviso">Si el alumno o alumna es menor de 14 años, este formulario debe rellenarlo su padre, madre o tutor legal.</p>
+              <div class="casilla">
+                <input type="checkbox" id="tutor" name="Consentimiento del tutor legal" value="Sí" aria-describedby="error-tutor">
+                <label for="tutor">Soy el padre, la madre o el tutor legal y doy mi consentimiento para que Academia Faro trate estos datos para contactar conmigo. <span aria-hidden="true">*</span></label>
+              </div>
+              <p class="campo__error" id="error-tutor"></p>
+            </div>
+
+            <div class="campo">
+              <label for="interes">¿Qué te interesa? <span aria-hidden="true">*</span></label>
+              <select id="interes" name="Interés" required aria-describedby="error-interes">
+                <option value="">Elige una opción</option>
+                <option value="Refuerzo escolar">Refuerzo escolar</option>
+                <option value="Inglés">Inglés</option>
+                <option value="Cambridge">Cambridge</option>
+                <option value="Clases particulares">Clases particulares</option>
+              </select>
+              <p class="campo__error" id="error-interes"></p>
+            </div>
+          </fieldset>
+
+          <fieldset class="grupo" id="grupo-franja" aria-describedby="error-franja">
+            <legend>Franja horaria preferida (tardes) <span aria-hidden="true">*</span></legend>
+            <div class="opciones">
+              <div class="casilla">
+                <input type="radio" id="franja-1" name="Franja horaria" value="16:00 a 18:30" required>
+                <label for="franja-1">16:00 a 18:30</label>
+              </div>
+              <div class="casilla">
+                <input type="radio" id="franja-2" name="Franja horaria" value="18:30 a 21:00">
+                <label for="franja-2">18:30 a 21:00</label>
+              </div>
+            </div>
+            <p class="campo__error" id="error-franja"></p>
+          </fieldset>
+
+          <div class="campo">
+            <label for="mensaje">Mensaje (opcional)</label>
+            <textarea id="mensaje" name="Mensaje" rows="4" maxlength="1500"></textarea>
+          </div>
+
+          <div class="info-datos">
+            <h3>Información básica sobre protección de datos</h3>
+            <ul>
+              <li><strong>Responsable:</strong> Academia Faro.</li>
+              <li><strong>Para qué:</strong> responder a tu solicitud y organizar la clase de prueba.</li>
+              <li><strong>Legitimación:</strong> tu consentimiento.</li>
+              <li><strong>Destinatarios:</strong> el servicio de formularios que nos entrega el mensaje. No cedemos tus datos a nadie más.</li>
+              <li><strong>Derechos:</strong> puedes acceder, rectificar y suprimir tus datos escribiendo a <a href="mailto:info@academiafaro.example">info@academiafaro.example</a>.</li>
+            </ul>
+          </div>
+
+          <div class="casilla">
+            <input type="checkbox" id="privacidad" name="Acepta la política de privacidad" value="Sí" required aria-describedby="error-privacidad">
+            <label for="privacidad">He leído la información sobre protección de datos y acepto la política de privacidad. <span aria-hidden="true">*</span></label>
+          </div>
+          <p class="campo__error" id="error-privacidad"></p>
+
+          <button class="boton boton--acento formulario__enviar" type="submit">Enviar solicitud</button>
+
+          <div class="estado estado--exito" id="estado-exito" role="status" tabindex="-1" hidden>
+            <p><strong>¡Gracias! Te escribiremos en 1 o 2 días laborables.</strong></p>
+          </div>
+          <div class="estado estado--error" id="estado-error" role="alert" tabindex="-1" hidden>
+            <p><strong>No hemos podido enviar tu solicitud.</strong> Revisa tu conexión e inténtalo de nuevo; lo que has escrito sigue aquí. Si prefieres, llámanos al <a href="tel:+34600000005">600 000 005</a> o escríbenos por <a href="https://wa.me/34600000005" rel="noopener">WhatsApp</a>.</p>
+          </div>
+        </form>
+
+        <p class="nota">¿Prefieres hablar con nosotros? Llámanos al <a href="tel:+34600000005">600 000 005</a> o escríbenos por <a href="https://wa.me/34600000005" rel="noopener">WhatsApp</a>.</p>
       </div>
     </section>
 
@@ -134,5 +248,7 @@
     </a>
   </div>
 
+  <script src="js/config.js" defer></script>
+  <script src="js/formulario.js" defer></script>
 </body>
 </html>

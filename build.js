@@ -50,6 +50,10 @@ const testimonios = leerJSON(path.join(CONTENIDO, 'testimonios.json'));
 const paginas = leerJSON(path.join(CONTENIDO, 'paginas.json'));
 const alts = leerJSON(path.join(CONTENIDO, 'imagenes.json'));
 const todos = blog.leerArticulos(path.join(CONTENIDO, 'blog'));
+const config = require('./estaticos/js/config.js');
+if (config.formspree.includes('TU_ID')) {
+  console.warn('AVISO: el formulario no está conectado. Pon tu endpoint de Formspree en estaticos/js/config.js');
+}
 
 // ---------- 4. Qué artículos se publican ----------
 const { publicados, omitidos } = blog.clasificar(todos, HOY);
@@ -75,6 +79,7 @@ const datosComunes = {
   descuento: escapar(negocio.condiciones.descuentoHermanos),
   max_alumnos: escapar(negocio.condiciones.maxAlumnos),
   anio: HOY.slice(0, 4),
+  formspree: escapar(config.formspree),
   horario_atencion: componentes.horario(negocio.horarioAtencion),
   horario_clases: componentes.horario(negocio.horarioClases),
 };
@@ -85,7 +90,8 @@ const datosComunes = {
 //   plantilla:   archivo de plantillas/paginas/
 //   valores:     huecos propios de esa página (función que recibe "raiz")
 const generadas = [];
-function generarPagina({ salida, menuActivo, titulo, descripcion, plantilla, valores = () => ({}) }) {
+//   scripts:     archivos JS que necesita solo esta página
+function generarPagina({ salida, menuActivo, titulo, descripcion, plantilla, scripts = [], valores = () => ({}) }) {
   const raiz = rutaRaiz(salida);
   const todosLosValores = {
     ...datosComunes,
@@ -93,6 +99,7 @@ function generarPagina({ salida, menuActivo, titulo, descripcion, plantilla, val
     titulo: escapar(titulo),
     descripcion: escapar(descripcion),
     menu: componentes.menu(menuActivo, raiz),
+    scripts: scripts.map((s) => `  <script src="${raiz}${s}" defer></script>`).join('\n'),
     ...valores(raiz),
   };
 
@@ -113,6 +120,7 @@ for (const p of paginas) {
     titulo: p.titulo,
     descripcion: p.descripcion,
     plantilla: p.plantilla,
+    scripts: p.scripts,
     valores: (raiz) => ({
       cursos_destacados: componentes.cursosDestacados(cursos, raiz),
       fichas_cursos: componentes.fichasCursos(cursos, raiz),
