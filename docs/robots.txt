@@ -1,0 +1,5 @@
+# Todos los buscadores pueden rastrear la web entera
+User-agent: *
+Allow: /
+
+Sitemap: https://alvaro-codes170.github.io/academia-demo/sitemap.xml

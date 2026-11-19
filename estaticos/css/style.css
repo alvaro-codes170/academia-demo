@@ -371,6 +371,18 @@ fieldset[aria-invalid="true"] .opciones { outline: 2px solid #B3261E; outline-of
   .formulario__enviar { width: auto; }
 }
 
+/* ---------- 6d. Página 404 ---------- */
+.pagina-404 { padding-block: 3rem 4rem; text-align: center; }
+.pagina-404__codigo {
+  font-family: var(--fuente-titulos); font-weight: 800; line-height: 1;
+  font-size: clamp(5rem, 25vw, 9rem); color: var(--amarillo); margin: 0 0 .5rem;
+}
+.pagina-404 .entradilla { margin-inline: auto; }
+.pagina-404__enlaces {
+  list-style: none; padding: 0; margin: 2rem 0;
+  display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem;
+}
+
 /* ---------- 7. Pie ---------- */
 .pie { background: var(--texto); color: #E6EBF0; padding-top: 2.5rem; margin-top: 2rem; }
 .pie a { color: var(--blanco); }

@@ -4,28 +4,32 @@
     "plantilla": "index.html",
     "salida": "index.html",
     "titulo": "Academia Faro | Refuerzo escolar e idiomas en Villanueva del Faro",
-    "descripcion": "Refuerzo escolar e inglés en grupos de máximo 8 alumnos para Primaria, ESO, Bachillerato y adultos. Pide tu clase de prueba gratis."
+    "descripcion": "Refuerzo escolar e inglés en grupos de máximo 8 alumnos para Primaria, ESO, Bachillerato y adultos. Pide tu clase de prueba gratis.",
+    "datos": ["organizacion"]
   },
   {
     "id": "cursos",
     "plantilla": "cursos.html",
     "salida": "cursos.html",
     "titulo": "Cursos y cuotas | Academia Faro",
-    "descripcion": "Refuerzo de Primaria, ESO y Bachillerato, inglés en grupo, Cambridge B2 First y clases particulares: horas, cuotas y preguntas frecuentes."
+    "descripcion": "Refuerzo de Primaria, ESO y Bachillerato, inglés en grupo, Cambridge B2 First y clases particulares: horas, cuotas y preguntas frecuentes.",
+    "datos": ["faq"]
   },
   {
     "id": "profesorado",
     "plantilla": "profesorado.html",
     "salida": "profesorado.html",
     "titulo": "Profesorado | Academia Faro",
-    "descripcion": "Conoce al equipo de profesores de Academia Faro: profesorado titulado y con experiencia en el nivel que enseña."
+    "descripcion": "Conoce al equipo de profesores de Academia Faro: profesorado titulado y con experiencia en el nivel que enseña.",
+    "datos": ["organizacion"]
   },
   {
     "id": "contacto",
     "plantilla": "contacto.html",
     "salida": "contacto.html",
-    "scripts": ["js/config.js", "js/formulario.js"],
     "titulo": "Contacto y clase de prueba | Academia Faro",
-    "descripcion": "Dirección, horario, teléfono y WhatsApp de Academia Faro en Villanueva del Faro. Pide tu clase de prueba gratuita y sin compromiso."
+    "descripcion": "Dirección, horario, teléfono y WhatsApp de Academia Faro en Villanueva del Faro. Pide tu clase de prueba gratuita y sin compromiso.",
+    "scripts": ["js/config.js", "js/formulario.js"],
+    "datos": ["organizacion"]
   }
 ]

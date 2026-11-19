@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blog de Academia Faro</title>
+    <link>https://alvaro-codes170.github.io/academia-demo/blog/</link>
+    <atom:link href="https://alvaro-codes170.github.io/academia-demo/feed.xml" rel="self" type="application/rss+xml"/>
+    <description>Consejos de estudio, idiomas e ideas para familias de Academia Faro.</description>
+    <language>es-ES</language>
+    <lastBuildDate>Tue, 10 Nov 2026 09:00:00 GMT</lastBuildDate>
+    <item>
+      <title>Cómo organizar el estudio en época de exámenes</title>
+      <link>https://alvaro-codes170.github.io/academia-demo/blog/como-organizar-el-estudio-en-epoca-de-examenes/</link>
+      <guid isPermaLink="true">https://alvaro-codes170.github.io/academia-demo/blog/como-organizar-el-estudio-en-epoca-de-examenes/</guid>
+      <pubDate>Tue, 10 Nov 2026 09:00:00 GMT</pubDate>
+      <category>Estudio</category>
+      <description>Un plan sencillo para llegar a los exámenes con el temario trabajado y sin agobios de última hora.</description>
+    </item>
+    <item>
+      <title>Cinco hábitos para mejorar tu inglés sin darte cuenta</title>
+      <link>https://alvaro-codes170.github.io/academia-demo/blog/cinco-habitos-para-mejorar-tu-ingles/</link>
+      <guid isPermaLink="true">https://alvaro-codes170.github.io/academia-demo/blog/cinco-habitos-para-mejorar-tu-ingles/</guid>
+      <pubDate>Wed, 28 Oct 2026 09:00:00 GMT</pubDate>
+      <category>Idiomas</category>
+      <description>Pequeños gestos del día a día que te ponen en contacto con el inglés sin sentir que estás estudiando.</description>
+    </item>
+    <item>
+      <title>¿Cuánto tiempo de estudio necesita un adolescente?</title>
+      <link>https://alvaro-codes170.github.io/academia-demo/blog/cuanto-tiempo-de-estudio-necesita-un-adolescente/</link>
+      <guid isPermaLink="true">https://alvaro-codes170.github.io/academia-demo/blog/cuanto-tiempo-de-estudio-necesita-un-adolescente/</guid>
+      <pubDate>Wed, 14 Oct 2026 09:00:00 GMT</pubDate>
+      <category>Estudio</category>
+      <description>No hay una cifra mágica. Te contamos en qué fijarte para saber si el tiempo de estudio es suficiente y se aprovecha bien.</description>
+    </item>
+    <item>
+      <title>Cambridge B2 First: qué esperar del examen</title>
+      <link>https://alvaro-codes170.github.io/academia-demo/blog/cambridge-b2-first-que-esperar-del-examen/</link>
+      <guid isPermaLink="true">https://alvaro-codes170.github.io/academia-demo/blog/cambridge-b2-first-que-esperar-del-examen/</guid>
+      <pubDate>Wed, 30 Sep 2026 09:00:00 GMT</pubDate>
+      <category>Idiomas</category>
+      <description>Las partes del examen B2 First explicadas de forma sencilla, y algunos consejos para prepararlo con tranquilidad.</description>
+    </item>
+    <item>
+      <title>Vuelta al cole: preparar el curso en familia</title>
+      <link>https://alvaro-codes170.github.io/academia-demo/blog/vuelta-al-cole-preparar-el-curso-en-familia/</link>
+      <guid isPermaLink="true">https://alvaro-codes170.github.io/academia-demo/blog/vuelta-al-cole-preparar-el-curso-en-familia/</guid>
+      <pubDate>Sat, 12 Sep 2026 09:00:00 GMT</pubDate>
+      <category>Familias</category>
+      <description>Ideas para empezar el curso con buen pie: rutinas, un espacio de estudio y una buena comunicación en casa.</description>
+    </item>
+    <item>
+      <title>Cómo elegir una academia de refuerzo</title>
+      <link>https://alvaro-codes170.github.io/academia-demo/blog/como-elegir-una-academia-de-refuerzo/</link>
+      <guid isPermaLink="true">https://alvaro-codes170.github.io/academia-demo/blog/como-elegir-una-academia-de-refuerzo/</guid>
+      <pubDate>Wed, 02 Sep 2026 09:00:00 GMT</pubDate>
+      <category>Familias</category>
+      <description>Qué preguntar y en qué fijarse antes de apuntar a vuestro hijo o hija a una academia de refuerzo escolar.</description>
+    </item>
+  </channel>
+</rss>
