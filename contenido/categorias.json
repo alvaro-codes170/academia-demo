@@ -1,0 +1,18 @@
+[
+  {
+    "nombre": "Estudio",
+    "descripcion": "Artículos del blog de Academia Faro sobre estudio: organización, técnicas y hábitos para aprender mejor y llegar tranquilo a los exámenes."
+  },
+  {
+    "nombre": "Idiomas",
+    "descripcion": "Artículos del blog de Academia Faro sobre idiomas: consejos para mejorar tu inglés y preparar los exámenes oficiales de Cambridge."
+  },
+  {
+    "nombre": "Familias",
+    "descripcion": "Artículos del blog de Academia Faro para familias: ideas para acompañar a tus hijos durante el curso y elegir el mejor apoyo."
+  },
+  {
+    "nombre": "Selectividad",
+    "descripcion": "Artículos del blog de Academia Faro sobre Selectividad: cómo organizar la preparación de la prueba de acceso a la universidad."
+  }
+]

@@ -86,15 +86,23 @@ function relacionados(articulo, publicados, cuantos = 2) {
     .slice(0, cuantos);
 }
 
-// Las categorías salen de los propios artículos publicados:
-// si mañana escribes uno con "categoria: Selectividad", aparece sola.
-function categorias(publicados) {
-  const mapa = new Map();
-  for (const a of publicados) {
-    if (!mapa.has(a.categoriaSlug)) mapa.set(a.categoriaSlug, { nombre: a.categoria, slug: a.categoriaSlug, articulos: [] });
-    mapa.get(a.categoriaSlug).articulos.push(a);
+// Las categorías se definen en contenido/categorias.json (así existen aunque
+// todavía no tengan artículos). Cada artículo publicado se mete en la suya.
+function categorias(publicados, lista) {
+  const mapa = new Map(lista.map((c) => [aSlug(c.nombre), { ...c, slug: aSlug(c.nombre), articulos: [] }]));
+  for (const a of publicados) mapa.get(a.categoriaSlug).articulos.push(a);
+  return [...mapa.values()];
+}
+
+// Avisa si un artículo usa una categoría que no está en categorias.json
+// (por ejemplo, por una falta de ortografía: "Idiomass").
+function comprobarCategorias(articulos, lista) {
+  const validas = new Set(lista.map((c) => aSlug(c.nombre)));
+  for (const a of articulos) {
+    if (!validas.has(a.categoriaSlug)) {
+      throw new Error(`"${a.archivo}": la categoría "${a.categoria}" no existe. Categorías válidas: ${lista.map((c) => c.nombre).join(', ')} (contenido/categorias.json).`);
+    }
   }
-  return [...mapa.values()].sort((x, y) => x.nombre.localeCompare(y.nombre, 'es'));
 }
 
 // Trocea una lista en páginas de 4.
@@ -123,4 +131,4 @@ function fechaLarga(iso) {
   return `${d} de ${MESES[m - 1]} de ${a}`;
 }
 
-module.exports = { leerArticulos, clasificar, relacionados, categorias, paginar, fechaLarga, esFechaValida, tiempoLectura, aSlug };
+module.exports = { leerArticulos, clasificar, relacionados, categorias, comprobarCategorias, paginar, fechaLarga, esFechaValida, tiempoLectura, aSlug };

@@ -67,8 +67,10 @@ const ANALITICA = codigoAnalitica
 if (!codigoAnalitica) console.warn('AVISO: la analítica está desactivada. Pon tu código de GoatCounter en estaticos/js/config.js');
 
 // ---------- 4. Qué artículos se publican ----------
+const listaCategorias = leerJSON(path.join(CONTENIDO, 'categorias.json'));
+blog.comprobarCategorias(todos, listaCategorias);
 const { publicados, omitidos } = blog.clasificar(todos, HOY);
-const categorias = blog.categorias(publicados);
+const categorias = blog.categorias(publicados, listaCategorias);
 
 // Datos del negocio que pueden usar todas las plantillas como {{nombre}}.
 const datosComunes = {
@@ -236,7 +238,9 @@ function generarListado({ lista, base, actual, titulo, entradilla, descripcion }
         blog_titulo: escapar(titulo) + escapar(sufijo),
         blog_entradilla: escapar(entradilla),
         categorias: componentes.navCategorias(categorias, publicados.length, actual, raiz),
-        articulos: componentes.listaArticulos(pagina.articulos, raiz, alts, 'h2', true),
+        articulos: pagina.articulos.length
+          ? componentes.listaArticulos(pagina.articulos, raiz, alts, 'h2', true)
+          : `          <li class="articulos__vacio">Todavía no hay artículos en esta categoría. Mientras tanto, echa un vistazo a <a href="${raiz}blog/">todos los artículos del blog</a>.</li>`,
         paginacion: componentes.paginacion(pagina, raiz),
       }),
     });
@@ -258,8 +262,8 @@ for (const c of categorias) {
     base: `blog/categoria/${c.slug}`,
     actual: c.slug,
     titulo: `Blog: ${c.nombre}`,
-    entradilla: `Artículos de la categoría ${c.nombre}.`,
-    descripcion: `Artículos del blog de Academia Faro sobre ${c.nombre.toLowerCase()}: consejos prácticos y sencillos del equipo de la academia.`,
+    entradilla: c.articulos.length ? `Artículos de la categoría ${c.nombre}.` : `Muy pronto publicaremos los primeros artículos de ${c.nombre}.`,
+    descripcion: c.descripcion,
   });
 }
 

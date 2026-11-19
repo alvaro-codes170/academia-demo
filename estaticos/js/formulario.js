@@ -51,6 +51,7 @@
     edad: (v) => (v ? '' : 'Elige la edad o el curso.'),
     interes: (v) => (v ? '' : 'Elige qué te interesa.'),
     franja: () => (form.querySelector('input[name="Franja horaria"]:checked') ? '' : 'Elige una franja horaria.'),
+    origen: (v) => (v ? '' : 'Cuéntanos cómo nos has conocido.'),
     tutor: () => (edad.value === MENOR && !tutor.checked ? 'Para menores de 14 años, el padre, la madre o el tutor legal debe dar su consentimiento.' : ''),
     privacidad: () => (document.getElementById('privacidad').checked ? '' : 'Debes aceptar la política de privacidad para enviar la solicitud.'),
   };
