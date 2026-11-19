@@ -9,7 +9,7 @@ const CONFIG = {
   // Dirección (endpoint) de tu formulario de Formspree.
   // La encuentras en formspree.io > tu formulario > "Integration".
   // Cambia TU_ID por el código de tu formulario, por ejemplo: https://formspree.io/f/abcdwxyz
-  formspree: 'https://formspree.io/f/TU_ID',
+  formspree: 'https://formspree.io/f/xgakzbll',
 };
 
 // Esta línea permite que build.js (Node) también lea este archivo.
