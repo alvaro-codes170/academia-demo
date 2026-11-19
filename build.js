@@ -59,6 +59,13 @@ if (config.formspree.includes('TU_ID')) {
   console.warn('AVISO: el formulario no está conectado. Pon tu endpoint de Formspree en estaticos/js/config.js');
 }
 
+// Analítica sin cookies (GoatCounter). Solo se añade si hay un código válido en config.js.
+const codigoAnalitica = /^[a-z0-9-]+$/.test(config.goatcounter || '') && config.goatcounter !== 'TU_CODIGO' ? config.goatcounter : null;
+const ANALITICA = codigoAnalitica
+  ? `  <script data-goatcounter="https://${codigoAnalitica}.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>`
+  : '';
+if (!codigoAnalitica) console.warn('AVISO: la analítica está desactivada. Pon tu código de GoatCounter en estaticos/js/config.js');
+
 // ---------- 4. Qué artículos se publican ----------
 const { publicados, omitidos } = blog.clasificar(todos, HOY);
 const categorias = blog.categorias(publicados);
@@ -84,6 +91,7 @@ const datosComunes = {
   max_alumnos: escapar(negocio.condiciones.maxAlumnos),
   anio: HOY.slice(0, 4),
   formspree: escapar(config.formspree),
+  analitica: ANALITICA,
   horario_atencion: componentes.horario(negocio.horarioAtencion),
   horario_clases: componentes.horario(negocio.horarioClases),
 };
@@ -223,7 +231,7 @@ function generarListado({ lista, base, actual, titulo, entradilla, descripcion }
         blog_titulo: escapar(titulo) + escapar(sufijo),
         blog_entradilla: escapar(entradilla),
         categorias: componentes.navCategorias(categorias, publicados.length, actual, raiz),
-        articulos: componentes.listaArticulos(pagina.articulos, raiz, alts, 'h2'),
+        articulos: componentes.listaArticulos(pagina.articulos, raiz, alts, 'h2', true),
         paginacion: componentes.paginacion(pagina, raiz),
       }),
     });

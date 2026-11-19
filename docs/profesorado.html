@@ -137,7 +137,7 @@
 
     <section class="seccion" aria-label="Profesores">
       <div class="contenedor profesorado">
-        <img class="profesorado__imagen" src="img/profesorado.svg" alt="Manos de una profesora señalando ejercicios en una pizarra blanca" width="1200" height="800" loading="lazy" decoding="async">
+        <img class="profesorado__imagen" src="img/profesorado.svg" alt="Manos de una profesora señalando ejercicios en una pizarra blanca" width="1200" height="800" fetchpriority="high">
         <ul class="profes">
           <li class="profe">
             <span class="profe__inicial" aria-hidden="true">BS</span>
@@ -213,7 +213,14 @@
         </ul>
       </div>
     </div>
-    <p class="contenedor pie__legal">© 2026 Academia Faro. Web de un cliente ficticio creada como ejercicio.</p>
+    <div class="contenedor pie__legal">
+      <p>© 2026 Academia Faro. Web de un cliente ficticio creada como ejercicio.</p>
+      <ul class="pie__enlaces-legales">
+        <li><a href="aviso-legal.html">Aviso legal</a></li>
+        <li><a href="politica-privacidad.html">Privacidad</a></li>
+        <li><a href="politica-cookies.html">Cookies</a></li>
+      </ul>
+    </div>
   </footer>
 
   <div class="barra-movil">
@@ -226,6 +233,7 @@
       WhatsApp
     </a>
   </div>
+
 
 
 </body>

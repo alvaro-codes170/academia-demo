@@ -108,7 +108,7 @@
       <div class="contenedor">
         <ul class="fichas">
           <li class="ficha" id="refuerzo-primaria">
-            <img src="img/curso-primaria.svg" alt="Mesa con cuadernos abiertos, lápices de colores y una regla" width="1200" height="800" loading="lazy" decoding="async">
+            <img src="img/curso-primaria.svg" alt="Mesa con cuadernos abiertos, lápices de colores y una regla" width="1200" height="800" fetchpriority="high">
             <div class="ficha__cuerpo">
               <h2>Refuerzo escolar Primaria</h2>
               <p class="ficha__nivel">1.º a 6.º de Primaria</p>
@@ -281,7 +281,14 @@
         </ul>
       </div>
     </div>
-    <p class="contenedor pie__legal">© 2026 Academia Faro. Web de un cliente ficticio creada como ejercicio.</p>
+    <div class="contenedor pie__legal">
+      <p>© 2026 Academia Faro. Web de un cliente ficticio creada como ejercicio.</p>
+      <ul class="pie__enlaces-legales">
+        <li><a href="aviso-legal.html">Aviso legal</a></li>
+        <li><a href="politica-privacidad.html">Privacidad</a></li>
+        <li><a href="politica-cookies.html">Cookies</a></li>
+      </ul>
+    </div>
   </footer>
 
   <div class="barra-movil">
@@ -294,6 +301,7 @@
       WhatsApp
     </a>
   </div>
+
 
 
 </body>

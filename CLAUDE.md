@@ -19,4 +19,4 @@
 - No se inventan datos ni cifras que no estén en briefing.md. Los artículos son consejos generales, sin estudios ni porcentajes.
 - Textos en español, tono cercano, frases cortas. Primero el móvil. Accesibilidad AA.
 - Cada fase se hace en su rama, con commits que citan el número del Issue.
-- Antes de dar una tarea por terminada, explica cómo probarla paso a paso.
+- Antes de dar una tarea por terminada, ejecuta `node build.js` y `node scripts/check.js` (debe terminar sin errores) y explica cómo probarla paso a paso.

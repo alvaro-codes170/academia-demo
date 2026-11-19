@@ -69,7 +69,7 @@
         </nav>
         <ul class="articulos articulos--dos">
           <li class="articulo-tarjeta">
-            <img src="../img/blog.svg" alt="Libros apilados y una taza de café sobre una mesa de estudio" width="1200" height="800" loading="lazy" decoding="async">
+            <img src="../img/blog.svg" alt="Libros apilados y una taza de café sobre una mesa de estudio" width="1200" height="800" fetchpriority="high">
             <div class="articulo-tarjeta__cuerpo">
               <p class="articulo-tarjeta__meta"><a href="../blog/categoria/estudio/">Estudio</a> · <time datetime="2026-11-10">10 de noviembre de 2026</time> · 2 min</p>
               <h2><a href="../blog/como-organizar-el-estudio-en-epoca-de-examenes/">Cómo organizar el estudio en época de exámenes</a></h2>
@@ -141,7 +141,14 @@
         </ul>
       </div>
     </div>
-    <p class="contenedor pie__legal">© 2026 Academia Faro. Web de un cliente ficticio creada como ejercicio.</p>
+    <div class="contenedor pie__legal">
+      <p>© 2026 Academia Faro. Web de un cliente ficticio creada como ejercicio.</p>
+      <ul class="pie__enlaces-legales">
+        <li><a href="../aviso-legal.html">Aviso legal</a></li>
+        <li><a href="../politica-privacidad.html">Privacidad</a></li>
+        <li><a href="../politica-cookies.html">Cookies</a></li>
+      </ul>
+    </div>
   </footer>
 
   <div class="barra-movil">
@@ -154,6 +161,7 @@
       WhatsApp
     </a>
   </div>
+
 
 
 </body>

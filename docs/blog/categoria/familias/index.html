@@ -69,7 +69,7 @@
         </nav>
         <ul class="articulos articulos--dos">
           <li class="articulo-tarjeta">
-            <img src="../../../img/curso-primaria.svg" alt="Mesa con cuadernos abiertos, lápices de colores y una regla" width="1200" height="800" loading="lazy" decoding="async">
+            <img src="../../../img/curso-primaria.svg" alt="Mesa con cuadernos abiertos, lápices de colores y una regla" width="1200" height="800" fetchpriority="high">
             <div class="articulo-tarjeta__cuerpo">
               <p class="articulo-tarjeta__meta"><a href="../../../blog/categoria/familias/">Familias</a> · <time datetime="2026-09-12">12 de septiembre de 2026</time> · 2 min</p>
               <h2><a href="../../../blog/vuelta-al-cole-preparar-el-curso-en-familia/">Vuelta al cole: preparar el curso en familia</a></h2>
@@ -121,7 +121,14 @@
         </ul>
       </div>
     </div>
-    <p class="contenedor pie__legal">© 2026 Academia Faro. Web de un cliente ficticio creada como ejercicio.</p>
+    <div class="contenedor pie__legal">
+      <p>© 2026 Academia Faro. Web de un cliente ficticio creada como ejercicio.</p>
+      <ul class="pie__enlaces-legales">
+        <li><a href="../../../aviso-legal.html">Aviso legal</a></li>
+        <li><a href="../../../politica-privacidad.html">Privacidad</a></li>
+        <li><a href="../../../politica-cookies.html">Cookies</a></li>
+      </ul>
+    </div>
   </footer>
 
   <div class="barra-movil">
@@ -134,6 +141,7 @@
       WhatsApp
     </a>
   </div>
+
 
 
 </body>

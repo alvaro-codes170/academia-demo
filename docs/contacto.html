@@ -271,12 +271,13 @@
               <li><strong>Legitimación:</strong> tu consentimiento.</li>
               <li><strong>Destinatarios:</strong> el servicio de formularios que nos entrega el mensaje. No cedemos tus datos a nadie más.</li>
               <li><strong>Derechos:</strong> puedes acceder, rectificar y suprimir tus datos escribiendo a <a href="mailto:info@academiafaro.example">info@academiafaro.example</a>.</li>
+              <li><strong>Más información:</strong> en nuestra <a href="politica-privacidad.html">política de privacidad</a>, con un apartado sobre <a href="politica-privacidad.html#menores">datos de menores</a>.</li>
             </ul>
           </div>
 
           <div class="casilla">
             <input type="checkbox" id="privacidad" name="Acepta la política de privacidad" value="Sí" required aria-describedby="error-privacidad">
-            <label for="privacidad">He leído la información sobre protección de datos y acepto la política de privacidad. <span aria-hidden="true">*</span></label>
+            <label for="privacidad">He leído la información sobre protección de datos y acepto la <a href="politica-privacidad.html">política de privacidad</a>. <span aria-hidden="true">*</span></label>
           </div>
           <p class="campo__error" id="error-privacidad"></p>
 
@@ -326,7 +327,14 @@
         </ul>
       </div>
     </div>
-    <p class="contenedor pie__legal">© 2026 Academia Faro. Web de un cliente ficticio creada como ejercicio.</p>
+    <div class="contenedor pie__legal">
+      <p>© 2026 Academia Faro. Web de un cliente ficticio creada como ejercicio.</p>
+      <ul class="pie__enlaces-legales">
+        <li><a href="aviso-legal.html">Aviso legal</a></li>
+        <li><a href="politica-privacidad.html">Privacidad</a></li>
+        <li><a href="politica-cookies.html">Cookies</a></li>
+      </ul>
+    </div>
   </footer>
 
   <div class="barra-movil">
@@ -342,5 +350,6 @@
 
   <script src="js/config.js" defer></script>
   <script src="js/formulario.js" defer></script>
+
 </body>
 </html>

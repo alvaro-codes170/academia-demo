@@ -28,8 +28,12 @@ function horario(lista) {
 const horasTexto = (h) => (h === 1 ? '1 hora a la semana' : `${h} horas a la semana`);
 const cuotaTexto = (c) => `${c} €/mes`;
 
-function imagenCurso(curso, raiz) {
-  return `<img src="${raiz}img/${curso.imagen}.svg" alt="${escapar(curso.alt)}" width="1200" height="800" loading="lazy" decoding="async">`;
+// "lazy" retrasa la carga hasta que la imagen se acerca a la pantalla.
+// La primera imagen visible de una página NO debe ser lazy (es lo que mide el LCP).
+const carga = (primera) => (primera ? 'fetchpriority="high"' : 'loading="lazy" decoding="async"');
+
+function imagenCurso(curso, raiz, primera = false) {
+  return `<img src="${raiz}img/${curso.imagen}.svg" alt="${escapar(curso.alt)}" width="1200" height="800" ${carga(primera)}>`;
 }
 
 // Tarjetas pequeñas para la página de inicio (solo los cursos destacados).
@@ -47,8 +51,8 @@ function cursosDestacados(cursos, raiz) {
 
 // Fichas completas para la página de cursos.
 function fichasCursos(cursos, raiz) {
-  return cursos.map((c) => `          <li class="ficha" id="${c.id}">
-            ${imagenCurso(c, raiz)}
+  return cursos.map((c, i) => `          <li class="ficha" id="${c.id}">
+            ${imagenCurso(c, raiz, i === 0)}
             <div class="ficha__cuerpo">
               <h2>${escapar(c.nombre)}</h2>
               <p class="ficha__nivel">${escapar(c.nivel)}</p>
@@ -100,9 +104,9 @@ function profesores(lista) {
 const { fechaLarga } = require('./blog');
 
 // Tarjeta de un artículo. "nivel" es el título: h2 en el listado, h3 en otras secciones.
-function tarjetaArticulo(a, raiz, alts, nivel = 'h2') {
+function tarjetaArticulo(a, raiz, alts, nivel = 'h2', primera = false) {
   return `          <li class="articulo-tarjeta">
-            <img src="${raiz}img/${a.imagen}.svg" alt="${escapar(alts[a.imagen] || '')}" width="1200" height="800" loading="lazy" decoding="async">
+            <img src="${raiz}img/${a.imagen}.svg" alt="${escapar(alts[a.imagen] || '')}" width="1200" height="800" ${carga(primera)}>
             <div class="articulo-tarjeta__cuerpo">
               <p class="articulo-tarjeta__meta"><a href="${raiz}blog/categoria/${a.categoriaSlug}/">${escapar(a.categoria)}</a> · <time datetime="${a.fecha}">${fechaLarga(a.fecha)}</time> · ${a.minutos} min</p>
               <${nivel}><a href="${raiz}blog/${a.slug}/">${escapar(a.titulo)}</a></${nivel}>
@@ -111,8 +115,9 @@ function tarjetaArticulo(a, raiz, alts, nivel = 'h2') {
           </li>`;
 }
 
-function listaArticulos(lista, raiz, alts, nivel) {
-  return lista.map((a) => tarjetaArticulo(a, raiz, alts, nivel)).join('\n');
+// "primeraVisible": true en el listado del blog, donde la primera tarjeta se ve al entrar.
+function listaArticulos(lista, raiz, alts, nivel, primeraVisible = false) {
+  return lista.map((a, i) => tarjetaArticulo(a, raiz, alts, nivel, primeraVisible && i === 0)).join('\n');
 }
 
 // Enlaces a "Todos" y a cada categoría, con el número de artículos.
