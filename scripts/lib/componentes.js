@@ -58,7 +58,7 @@ function fichasCursos(cursos, raiz) {
               </ul>
               <p>${escapar(c.descripcion)}</p>
               <div class="botones">
-                <a class="boton boton--acento" href="${raiz}contacto.html#clase-prueba">Pedir información<span class="visualmente-oculto"> sobre ${escapar(c.nombre)}</span></a>
+                <a class="boton boton--acento" href="${raiz}contacto.html?interes=${encodeURIComponent(c.interes)}#clase-prueba">Pedir información<span class="visualmente-oculto"> sobre ${escapar(c.nombre)}</span></a>
               </div>
             </div>
           </li>`).join('\n');

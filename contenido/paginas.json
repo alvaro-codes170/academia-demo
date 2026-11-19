@@ -24,6 +24,7 @@
     "id": "contacto",
     "plantilla": "contacto.html",
     "salida": "contacto.html",
+    "scripts": ["js/config.js", "js/formulario.js"],
     "titulo": "Contacto y clase de prueba | Academia Faro",
     "descripcion": "Dirección, horario, teléfono y WhatsApp de Academia Faro en Villanueva del Faro. Pide tu clase de prueba gratuita y sin compromiso."
   }

@@ -311,6 +311,66 @@ ul.articulos { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.25
 }
 .prosa blockquote p { margin: 0; }
 
+/* ---------- 6c. Formulario ---------- */
+.formulario { margin-top: 1.5rem; }
+.grupo { border: 0; padding: 0; margin: 0 0 1.5rem; }
+.grupo legend {
+  font-family: var(--fuente-titulos); font-weight: 700; color: var(--azul);
+  font-size: 1.15rem; padding: 0; margin-bottom: .75rem;
+}
+.campo { margin-bottom: 1.1rem; }
+.campo label { display: block; font-weight: 600; margin-bottom: .35rem; }
+.campo input, .campo select, .campo textarea {
+  width: 100%; min-height: 48px; padding: .65rem .85rem;
+  font: inherit; color: var(--texto); background: var(--blanco);
+  border: 2px solid #8A97A6; border-radius: var(--radio-pequeno);
+}
+.campo textarea { resize: vertical; }
+.campo input:focus, .campo select:focus, .campo textarea:focus { border-color: var(--azul); }
+.campo__ayuda { font-size: .92rem; color: var(--texto-suave); margin: .3rem 0 0; }
+.campo__error { color: #B3261E; font-weight: 600; font-size: .95rem; margin: .3rem 0 0; }
+.campo__error:empty { display: none; }
+[aria-invalid="true"] { border-color: #B3261E !important; }
+fieldset[aria-invalid="true"] .opciones { outline: 2px solid #B3261E; outline-offset: 6px; border-radius: 4px; }
+
+.casilla { display: flex; gap: .7rem; align-items: flex-start; margin-bottom: .35rem; }
+.casilla input { width: 1.4rem; height: 1.4rem; margin: .15rem 0 0; flex-shrink: 0; accent-color: var(--azul); }
+.casilla label { font-weight: 400; }
+.opciones { display: flex; flex-wrap: wrap; gap: .5rem 2rem; }
+.opciones .casilla label { font-weight: 600; }
+
+.tutor {
+  background: var(--amarillo-claro); border-left: 5px solid var(--amarillo);
+  border-radius: 0 var(--radio-pequeno) var(--radio-pequeno) 0;
+  padding: 1rem 1.1rem; margin-bottom: 1.1rem;
+}
+.tutor[hidden] { display: none; }
+.tutor__aviso { font-weight: 600; margin-bottom: .6rem; }
+
+.info-datos {
+  font-size: .92rem; background: var(--fondo); border: 1px solid var(--borde);
+  border-radius: var(--radio-pequeno); padding: 1rem 1.1rem; margin-bottom: 1rem;
+}
+.info-datos h3 { font-size: 1rem; color: var(--texto); }
+.info-datos ul { margin: 0; padding-left: 1.1rem; }
+
+.formulario__enviar { margin-top: 1.25rem; width: 100%; font-size: 1.05rem; border: 0; cursor: pointer; font-family: inherit; }
+.formulario__enviar:disabled { opacity: .7; cursor: wait; transform: none; }
+
+.estado { margin-top: 1rem; padding: 1rem 1.1rem; border-radius: var(--radio-pequeno); }
+.estado p { margin: 0; }
+.estado--exito { background: #E3F4EA; border: 2px solid #1E7A46; color: #155C34; }
+.estado--error { background: #FCE8E6; border: 2px solid #B3261E; color: #8C1D18; }
+.estado--error a { color: #8C1D18; font-weight: 700; }
+
+/* Campo trampa antispam: fuera de la vista, pero no "display:none"
+   (algunos robots se saltan los campos con display:none) */
+.trampa { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+@media (min-width: 640px) {
+  .formulario__enviar { width: auto; }
+}
+
 /* ---------- 7. Pie ---------- */
 .pie { background: var(--texto); color: #E6EBF0; padding-top: 2.5rem; margin-top: 2rem; }
 .pie a { color: var(--blanco); }
