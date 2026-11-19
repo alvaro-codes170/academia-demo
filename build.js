@@ -12,12 +12,16 @@
 //   5. Genera las páginas fijas (inicio, cursos, profesorado, contacto).
 //   6. Genera el blog: una página por artículo, el listado de 4 en 4
 //      y una página por categoría.
+//   7. Genera la página 404.
+//   8. Genera sitemap.xml, feed.xml y robots.txt.
+// Cada página lleva su URL canónica, Open Graph y datos estructurados.
 
 const path = require('path');
 const { leerJSON, vaciarCarpeta, copiarCarpeta, escribir, rutaRaiz, escapar } = require('./scripts/lib/utilidades');
 const { leerPlantilla, rellenar } = require('./scripts/lib/plantillas');
 const componentes = require('./scripts/lib/componentes');
 const blog = require('./scripts/lib/blog');
+const seo = require('./scripts/lib/seo');
 
 const RAIZ = __dirname;
 const SALIDA = path.join(RAIZ, 'docs');
@@ -91,8 +95,18 @@ const datosComunes = {
 //   valores:     huecos propios de esa página (función que recibe "raiz")
 const generadas = [];
 //   scripts:     archivos JS que necesita solo esta página
-function generarPagina({ salida, menuActivo, titulo, descripcion, plantilla, scripts = [], valores = () => ({}) }) {
-  const raiz = rutaRaiz(salida);
+//   datos:       datos estructurados (JSON-LD) de la página
+//   og:          datos extra para redes sociales (tipo "article", fecha...)
+//   fecha:       última modificación, para el sitemap
+//   indexable:   false solo en la 404 (ni canonical ni sitemap)
+const URL_SITIO = negocio.urlSitio;
+const IMAGEN_REDES = URL_SITIO + 'img/og-academia-faro.png';
+const paraSitemap = [];
+function generarPagina({ salida, menuActivo, titulo, descripcion, plantilla, scripts = [], datos = [], og, fecha, indexable = true, valores = () => ({}) }) {
+  // La 404 puede mostrarse en cualquier dirección (/blog/no-existe/...),
+  // así que sus enlaces empiezan por la raíz absoluta del sitio.
+  const raiz = indexable ? rutaRaiz(salida) : new URL(URL_SITIO).pathname;
+  const url = seo.urlAbsoluta(URL_SITIO, salida);
   const todosLosValores = {
     ...datosComunes,
     raiz,
@@ -100,6 +114,8 @@ function generarPagina({ salida, menuActivo, titulo, descripcion, plantilla, scr
     descripcion: escapar(descripcion),
     menu: componentes.menu(menuActivo, raiz),
     scripts: scripts.map((s) => `  <script src="${raiz}${s}" defer></script>`).join('\n'),
+    meta_seo: indexable ? metaSeo({ url, titulo, descripcion, og }) : '  <meta name="robots" content="noindex">',
+    datos_estructurados: datos.map(seo.jsonLd).join('\n'),
     ...valores(raiz),
   };
 
@@ -110,9 +126,40 @@ function generarPagina({ salida, menuActivo, titulo, descripcion, plantilla, scr
 
   escribir(path.join(SALIDA, salida), html);
   generadas.push(salida);
+  if (indexable) paraSitemap.push({ url, fecha });
+}
+
+// Etiquetas para buscadores y redes sociales (Open Graph = vista previa al compartir).
+function metaSeo({ url, titulo, descripcion, og = {} }) {
+  const tipo = og.tipo || 'website';
+  const lineas = [
+    `<link rel="canonical" href="${url}">`,
+    `<meta property="og:type" content="${tipo}">`,
+    `<meta property="og:site_name" content="${escapar(negocio.nombre)}">`,
+    `<meta property="og:locale" content="es_ES">`,
+    `<meta property="og:title" content="${escapar(og.titulo || titulo)}">`,
+    `<meta property="og:description" content="${escapar(descripcion)}">`,
+    `<meta property="og:url" content="${url}">`,
+    `<meta property="og:image" content="${IMAGEN_REDES}">`,
+    `<meta property="og:image:width" content="1200">`,
+    `<meta property="og:image:height" content="630">`,
+    `<meta property="og:image:alt" content="${escapar(negocio.nombre)}: ${escapar(negocio.lema.toLowerCase())}">`,
+    `<meta name="twitter:card" content="summary_large_image">`,
+  ];
+  if (tipo === 'article') {
+    lineas.push(`<meta property="article:published_time" content="${og.fecha}">`);
+    lineas.push(`<meta property="article:section" content="${escapar(og.seccion)}">`);
+  }
+  return lineas.map((l) => '  ' + l).join('\n');
 }
 
 // ---------- 5. Páginas fijas ----------
+// En paginas.json, "datos" dice qué datos estructurados lleva cada página.
+const datosEstructurados = {
+  organizacion: seo.organizacion(negocio, profesorado),
+  faq: seo.faqPage(faq),
+};
+
 for (const p of paginas) {
   generarPagina({
     salida: p.salida,
@@ -121,6 +168,7 @@ for (const p of paginas) {
     descripcion: p.descripcion,
     plantilla: p.plantilla,
     scripts: p.scripts,
+    datos: (p.datos || []).map((tipo) => datosEstructurados[tipo]),
     valores: (raiz) => ({
       cursos_destacados: componentes.cursosDestacados(cursos, raiz),
       fichas_cursos: componentes.fichasCursos(cursos, raiz),
@@ -142,6 +190,9 @@ for (const a of publicados) {
     titulo: `${a.titulo} | Blog de ${negocio.nombre}`,
     descripcion: a.resumen,
     plantilla: 'articulo.html',
+    fecha: a.fecha,
+    og: { tipo: 'article', titulo: a.titulo, fecha: a.fecha, seccion: a.categoria },
+    datos: [seo.blogPosting(a, negocio, `${URL_SITIO}blog/${a.slug}/`, IMAGEN_REDES)],
     valores: (raiz) => ({
       titulo_articulo: escapar(a.titulo),
       categoria: escapar(a.categoria),
@@ -167,6 +218,7 @@ function generarListado({ lista, base, actual, titulo, entradilla, descripcion }
       titulo: `${titulo}${sufijo} | ${negocio.nombre}`,
       descripcion: descripcion + (pagina.numero > 1 ? ` Página ${pagina.numero}.` : ''),
       plantilla: 'blog.html',
+      fecha: pagina.articulos[0] && pagina.articulos[0].fecha,
       valores: (raiz) => ({
         blog_titulo: escapar(titulo) + escapar(sufijo),
         blog_entradilla: escapar(entradilla),
@@ -198,6 +250,22 @@ for (const c of categorias) {
   });
 }
 
+// ---------- 7. Página 404 ----------
+// GitHub Pages la muestra cuando alguien escribe una dirección que no existe.
+generarPagina({
+  salida: '404.html',
+  menuActivo: null,
+  titulo: `Página no encontrada | ${negocio.nombre}`,
+  descripcion: 'La página que buscas no existe o ha cambiado de dirección. Desde aquí puedes volver al inicio, a los cursos, al blog o al contacto.',
+  plantilla: '404.html',
+  indexable: false,
+});
+
+// ---------- 8. Archivos para buscadores y lectores de RSS ----------
+escribir(path.join(SALIDA, 'sitemap.xml'), seo.sitemap(paraSitemap));
+escribir(path.join(SALIDA, 'feed.xml'), seo.feed(publicados, negocio));
+escribir(path.join(SALIDA, 'robots.txt'), seo.robots(URL_SITIO));
+
 // ---------- Resumen en la terminal ----------
 console.log(`Fecha de referencia: ${HOY}`);
 console.log(`Artículos publicados: ${publicados.length}`);
@@ -207,4 +275,4 @@ if (omitidos.length) {
   omitidos.forEach((a) => console.log(`  ✗ ${a.fecha}  ${a.titulo}  → ${a.motivo}`));
 }
 console.log(`Categorías: ${categorias.map((c) => `${c.nombre} (${c.articulos.length})`).join(', ')}`);
-console.log(`Páginas generadas en docs/: ${generadas.length}`);
+console.log(`Páginas generadas en docs/: ${generadas.length} (+ sitemap.xml con ${paraSitemap.length} direcciones, feed.xml y robots.txt)`);
