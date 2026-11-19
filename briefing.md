@@ -124,3 +124,12 @@ Artículos iniciales (la web puede redactar textos breves de unos 250 a 400 pala
 - Plazo de entrega: 6 semanas
 - Mantenimiento opcional: 60 €/mes (publicación de artículos, cambios de cuotas y textos)
 - Pago: 50 % al empezar y 50 % al entregar
+
+## 11. Cambios del cliente (ronda 1, noviembre de 2026)
+Estos cambios sustituyen a los datos anteriores de este briefing:
+- **Cuotas nuevas:** Refuerzo escolar Primaria 52 €, ESO 62 € y Bachillerato 72 € (el resto no cambia).
+- **Artículo nuevo:** "Cómo preparar un examen oral de inglés", categoría Idiomas, fecha 2026-11-25 (programado).
+- **Categorías del blog:** Estudio, Idiomas, Familias y **Selectividad**.
+- **Formulario:** nuevo campo obligatorio "¿Cómo nos has conocido?" (Google, Instagram, un amigo o familiar, otro).
+- **Profesorado:** Samuel ya no forma parte del equipo; la web muestra 4 profesores.
+- **Color de acento:** naranja suave (#F4A261) en lugar del amarillo luz.
