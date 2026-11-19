@@ -7,6 +7,7 @@ const MENU = [
   { id: 'inicio', texto: 'Inicio', ruta: 'index.html' },
   { id: 'cursos', texto: 'Cursos', ruta: 'cursos.html' },
   { id: 'profesorado', texto: 'Profesorado', ruta: 'profesorado.html' },
+  { id: 'blog', texto: 'Blog', ruta: 'blog/' },
   { id: 'contacto', texto: 'Contacto', ruta: 'contacto.html' },
 ];
 
@@ -95,4 +96,64 @@ function profesores(lista) {
   }).join('\n');
 }
 
-module.exports = { menu, horario, cursosDestacados, fichasCursos, faq, testimonios, profesores };
+// ---------- Blog ----------
+const { fechaLarga } = require('./blog');
+
+// Tarjeta de un artículo. "nivel" es el título: h2 en el listado, h3 en otras secciones.
+function tarjetaArticulo(a, raiz, alts, nivel = 'h2') {
+  return `          <li class="articulo-tarjeta">
+            <img src="${raiz}img/${a.imagen}.svg" alt="${escapar(alts[a.imagen] || '')}" width="1200" height="800" loading="lazy" decoding="async">
+            <div class="articulo-tarjeta__cuerpo">
+              <p class="articulo-tarjeta__meta"><a href="${raiz}blog/categoria/${a.categoriaSlug}/">${escapar(a.categoria)}</a> · <time datetime="${a.fecha}">${fechaLarga(a.fecha)}</time> · ${a.minutos} min</p>
+              <${nivel}><a href="${raiz}blog/${a.slug}/">${escapar(a.titulo)}</a></${nivel}>
+              <p>${escapar(a.resumen)}</p>
+            </div>
+          </li>`;
+}
+
+function listaArticulos(lista, raiz, alts, nivel) {
+  return lista.map((a) => tarjetaArticulo(a, raiz, alts, nivel)).join('\n');
+}
+
+// Enlaces a "Todos" y a cada categoría, con el número de artículos.
+function navCategorias(cats, total, actual, raiz) {
+  const enlace = (texto, ruta, n, esActual) =>
+    `            <li><a href="${raiz}${ruta}"${esActual ? ' aria-current="page"' : ''}>${escapar(texto)} <span class="categorias__n">(${n})</span></a></li>`;
+  return [
+    enlace('Todos', 'blog/', total, actual === null),
+    ...cats.map((c) => enlace(c.nombre, `blog/categoria/${c.slug}/`, c.articulos.length, actual === c.slug)),
+  ].join('\n');
+}
+
+// Enlaces "Anterior" / "Siguiente". Si solo hay una página, no se muestra nada.
+function paginacion(pagina, raiz) {
+  if (pagina.total === 1) return '';
+  const anterior = pagina.anterior
+    ? `<a class="boton boton--borde" href="${raiz}${pagina.anterior}" rel="prev">← Anterior</a>`
+    : '<span></span>';
+  const siguiente = pagina.siguiente
+    ? `<a class="boton boton--borde" href="${raiz}${pagina.siguiente}" rel="next">Siguiente →</a>`
+    : '<span></span>';
+  return `        <nav class="paginacion" aria-label="Páginas del blog">
+          ${anterior}
+          <p>Página ${pagina.numero} de ${pagina.total}</p>
+          ${siguiente}
+        </nav>`;
+}
+
+function relacionados(lista, raiz, alts) {
+  if (lista.length === 0) return '';
+  return `    <section class="seccion" aria-labelledby="titulo-relacionados">
+      <div class="contenedor">
+        <h2 id="titulo-relacionados" class="seccion__titulo">Artículos relacionados</h2>
+        <ul class="articulos articulos--dos">
+${listaArticulos(lista, raiz, alts, 'h3')}
+        </ul>
+      </div>
+    </section>`;
+}
+
+module.exports = {
+  menu, horario, cursosDestacados, fichasCursos, faq, testimonios, profesores,
+  listaArticulos, navCategorias, paginacion, relacionados,
+};

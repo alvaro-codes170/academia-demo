@@ -1,0 +1,25 @@
+    <article class="articulo">
+      <header class="cabecera-pagina">
+        <div class="contenedor contenedor--estrecho">
+          <p class="migas"><a href="{{raiz}}blog/">Blog</a> <span aria-hidden="true">›</span> <a href="{{raiz}}blog/categoria/{{categoria_slug}}/">{{categoria}}</a></p>
+          <h1>{{titulo_articulo}}</h1>
+          <p class="articulo__meta"><time datetime="{{fecha}}">{{fecha_larga}}</time> · {{minutos}} min de lectura</p>
+        </div>
+      </header>
+      <div class="contenedor contenedor--estrecho">
+        <img class="articulo__imagen" src="{{raiz}}img/{{imagen}}.svg" alt="{{imagen_alt}}" width="1200" height="800" fetchpriority="high">
+        <div class="prosa">
+{{cuerpo}}
+        </div>
+      </div>
+    </article>
+
+{{relacionados}}
+
+    <section class="llamada">
+      <div class="contenedor llamada__caja">
+        <h2>¿Hablamos?</h2>
+        <p>Ven a una clase de prueba gratuita y cuéntanos qué necesitas.</p>
+        <a class="boton boton--acento" href="{{raiz}}contacto.html#clase-prueba">Pide tu clase de prueba</a>
+      </div>
+    </section>

@@ -128,10 +128,10 @@ ul.tarjetas, ul.ventajas, ul.testimonios, ul.fichas, ul.profes,
 .logo__icono { width: 34px; height: 34px; }
 
 /* En el móvil el menú va debajo del logo y se puede deslizar */
-.menu { width: 100%; overflow-x: auto; }
-.menu ul { display: flex; gap: .1rem; }
+.menu { width: 100%; }
+.menu ul { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0; }
 .menu a {
-  display: block; padding: .55rem .6rem; border-radius: 999px; font-size: .95rem;
+  display: block; padding: .5rem .4rem; border-radius: 999px; font-size: .92rem;
   color: var(--blanco); text-decoration: none; white-space: nowrap; font-weight: 600;
 }
 .menu a:hover { background: rgba(255, 255, 255, .12); color: var(--blanco); }
@@ -263,6 +263,54 @@ ul.tarjetas, ul.ventajas, ul.testimonios, ul.fichas, ul.profes,
 .horario li { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 1rem; padding: .35rem 0; border-bottom: 1px dashed var(--borde); }
 .horario li span:first-child { font-weight: 600; }
 
+/* ---------- 6b. Blog ---------- */
+.categorias { margin-bottom: 1.75rem; }
+.categorias ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem; }
+.categorias a {
+  display: inline-block; padding: .45rem .95rem; border-radius: 999px;
+  border: 2px solid var(--azul); text-decoration: none; font-weight: 600;
+}
+.categorias a:hover { background: var(--azul-claro); }
+.categorias a[aria-current="page"] { background: var(--azul); color: var(--blanco); }
+.categorias__n { font-weight: 400; }
+
+ul.articulos { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.25rem; }
+.articulo-tarjeta {
+  background: var(--blanco); border-radius: var(--radio); box-shadow: var(--sombra);
+  overflow: hidden; display: flex; flex-direction: column;
+}
+.articulo-tarjeta img { aspect-ratio: 3 / 2; object-fit: cover; width: 100%; }
+.articulo-tarjeta__cuerpo { padding: 1.1rem 1.25rem 1.25rem; }
+.articulo-tarjeta__meta { font-size: .92rem; color: var(--texto-suave); margin-bottom: .4rem; }
+.articulo-tarjeta h2, .articulo-tarjeta h3 { font-size: 1.25rem; margin-bottom: .4rem; }
+.articulo-tarjeta h2 a, .articulo-tarjeta h3 a { text-decoration: none; }
+.articulo-tarjeta h2 a:hover, .articulo-tarjeta h3 a:hover { text-decoration: underline; }
+.articulo-tarjeta p:last-child { margin: 0; color: var(--texto-suave); }
+
+.paginacion {
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: .75rem;
+  margin-top: 2rem;
+}
+.paginacion p { margin: 0; color: var(--texto-suave); text-align: center; }
+.paginacion a[rel="next"] { justify-self: end; }
+.paginacion a[rel="prev"] { justify-self: start; }
+
+.migas { font-size: .95rem; margin-bottom: .5rem; }
+.articulo__meta { color: var(--texto-suave); margin: 0; }
+.articulo__imagen { border-radius: var(--radio); margin-block: 2rem; box-shadow: var(--sombra); }
+
+/* Texto largo de los artículos */
+.prosa { font-size: 1.1rem; line-height: 1.75; }
+.prosa h2 { font-size: 1.45rem; margin-top: 2rem; }
+.prosa h3 { font-size: 1.2rem; margin-top: 1.5rem; }
+.prosa ul, .prosa ol { padding-left: 1.3rem; margin: 0 0 1em; }
+.prosa li { margin-bottom: .35rem; }
+.prosa blockquote {
+  margin: 1.5rem 0; padding: .75rem 1.25rem; border-left: 5px solid var(--amarillo);
+  background: var(--amarillo-claro); border-radius: 0 var(--radio-pequeno) var(--radio-pequeno) 0;
+}
+.prosa blockquote p { margin: 0; }
+
 /* ---------- 7. Pie ---------- */
 .pie { background: var(--texto); color: #E6EBF0; padding-top: 2.5rem; margin-top: 2rem; }
 .pie a { color: var(--blanco); }
@@ -298,6 +346,7 @@ ul.tarjetas, ul.ventajas, ul.testimonios, ul.fichas, ul.profes,
 @media (min-width: 640px) {
   .ventajas, .testimonios { grid-template-columns: repeat(2, 1fr); }
   .tarjetas { grid-template-columns: repeat(2, 1fr); }
+  ul.articulos { grid-template-columns: repeat(2, 1fr); }
   .pie__rejilla { grid-template-columns: repeat(2, 1fr); }
   .contacto__imagenes { grid-template-columns: 1fr 1fr; }
 }
@@ -307,14 +356,17 @@ ul.tarjetas, ul.ventajas, ul.testimonios, ul.fichas, ul.profes,
   .barra-movil { display: none; }
 
   .cabecera__fila { flex-wrap: nowrap; padding-block: .9rem; }
-  .menu { width: auto; overflow: visible; }
+  .menu { width: auto; }
+  .menu ul { gap: .25rem; }
+  .menu a { padding: .55rem .8rem; font-size: 1rem; }
 
   .hero { padding-block: 4rem; }
   .hero__rejilla { grid-template-columns: 1.1fr 1fr; gap: 3rem; }
 
   .ventajas, .tarjetas, .testimonios { grid-template-columns: repeat(3, 1fr); }
   .fichas { grid-template-columns: repeat(2, 1fr); }
-  .profesorado { grid-template-columns: 1fr 1.3fr; }
+  ul.articulos { grid-template-columns: repeat(3, 1fr); }
+  ul.articulos.articulos--dos { grid-template-columns: repeat(2, 1fr); }  .profesorado { grid-template-columns: 1fr 1.3fr; }
   .profesorado__imagen { position: sticky; top: 6rem; }
   .contacto { grid-template-columns: 1fr 1fr; align-items: start; }
   .contacto__imagenes { grid-template-columns: 1fr; }
