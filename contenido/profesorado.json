@@ -1,0 +1,28 @@
+[
+  {
+    "nombre": "Beatriz Salcedo",
+    "materia": "Inglés y preparación Cambridge B2 First",
+    "nota": "Fundadora de la academia",
+    "frase": "Aprender un idioma es perderle el miedo a equivocarse."
+  },
+  {
+    "nombre": "Samuel Ortega",
+    "materia": "Matemáticas y Física (ESO y Bachillerato)",
+    "frase": "Un problema bien entendido ya está medio resuelto."
+  },
+  {
+    "nombre": "Lucía Ferrer",
+    "materia": "Refuerzo escolar de Primaria",
+    "frase": "Cada niño tiene su ritmo, y aquí lo respetamos."
+  },
+  {
+    "nombre": "Marta Iglesias",
+    "materia": "Lengua y Ciencias Sociales (ESO)",
+    "frase": "Leer bien es la llave para estudiar todo lo demás."
+  },
+  {
+    "nombre": "Daniel Rubio",
+    "materia": "Inglés en grupo (A1 a C1)",
+    "frase": "En mis clases se habla inglés desde el primer día."
+  }
+]

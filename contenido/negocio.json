@@ -1,0 +1,30 @@
+{
+  "nombre": "Academia Faro",
+  "lema": "Refuerzo escolar e idiomas",
+  "fundacion": 2015,
+  "fundadora": "Beatriz Salcedo",
+  "direccion": {
+    "calle": "Calle de la Luz 18, 1.º",
+    "codigoPostal": "28994",
+    "localidad": "Villanueva del Faro"
+  },
+  "telefono": "600 000 005",
+  "telefonoEnlace": "+34600000005",
+  "whatsapp": "600 000 005",
+  "whatsappEnlace": "https://wa.me/34600000005",
+  "correo": "info@academiafaro.example",
+  "instagram": "@academiafaro",
+  "horarioAtencion": [
+    { "dias": "Lunes a viernes", "horas": "10:00 a 13:00 y 16:00 a 21:00" },
+    { "dias": "Sábados y domingos", "horas": "Cerrado" }
+  ],
+  "horarioClases": [
+    { "dias": "Lunes a jueves", "horas": "16:00 a 21:00" }
+  ],
+  "condiciones": {
+    "matricula": "25 €",
+    "matriculaNota": "única vez por curso escolar",
+    "descuentoHermanos": "10 %",
+    "maxAlumnos": 8
+  }
+}

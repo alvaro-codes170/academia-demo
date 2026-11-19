@@ -1,0 +1,68 @@
+[
+  {
+    "id": "refuerzo-primaria",
+    "nombre": "Refuerzo escolar Primaria",
+    "nivel": "1.º a 6.º de Primaria",
+    "horas": 2,
+    "cuota": 49,
+    "imagen": "curso-primaria",
+    "alt": "Mesa con cuadernos abiertos, lápices de colores y una regla",
+    "destacado": false,
+    "descripcion": "Acompañamos a tu hijo o hija con los deberes y con las materias que más le cuestan. Trabajamos también los hábitos de estudio, en un grupo pequeño donde se siente a gusto para preguntar."
+  },
+  {
+    "id": "refuerzo-eso",
+    "nombre": "Refuerzo escolar ESO",
+    "nivel": "1.º a 4.º de ESO",
+    "horas": 2,
+    "cuota": 59,
+    "imagen": "curso-secundaria",
+    "alt": "Libros de texto apilados junto a una calculadora y un cuaderno de apuntes",
+    "destacado": true,
+    "descripcion": "Repasamos las materias del curso, resolvemos dudas y preparamos los exámenes con calma. Te ayudamos a organizarte para que llegues a cada prueba con el temario trabajado."
+  },
+  {
+    "id": "refuerzo-bachillerato",
+    "nombre": "Refuerzo escolar Bachillerato",
+    "nivel": "1.º y 2.º de Bachillerato",
+    "horas": 2,
+    "cuota": 69,
+    "imagen": "curso-secundaria",
+    "alt": "Libros de texto apilados junto a una calculadora y un cuaderno de apuntes",
+    "destacado": false,
+    "descripcion": "Apoyo en las materias de 1.º y 2.º de Bachillerato. En un grupo reducido tienes tiempo para resolver tus dudas y practicar con ejercicios del curso."
+  },
+  {
+    "id": "ingles-grupo",
+    "nombre": "Inglés en grupo",
+    "nivel": "Niveles A1 a C1",
+    "horas": 2,
+    "cuota": 45,
+    "imagen": "curso-ingles",
+    "alt": "Libros de inglés y un diccionario sobre una mesa de estudio",
+    "destacado": true,
+    "descripcion": "Grupos por nivel, del A1 al C1. Practicas hablar, escuchar, leer y escribir en clases dinámicas y cercanas, para niños, jóvenes y adultos."
+  },
+  {
+    "id": "cambridge-b2",
+    "nombre": "Preparación Cambridge B2 First",
+    "nivel": "Nivel B2",
+    "horas": 3,
+    "cuota": 79,
+    "imagen": "curso-cambridge",
+    "alt": "Cuaderno de ejercicios de inglés con un bolígrafo y un reloj al lado",
+    "destacado": true,
+    "descripcion": "Preparación específica para el examen oficial B2 First de Cambridge. Conoces cada parte de la prueba y practicas con ejercicios del mismo formato."
+  },
+  {
+    "id": "particulares",
+    "nombre": "Clases particulares",
+    "nivel": "Cualquier materia (1 alumno)",
+    "horas": 1,
+    "cuota": 60,
+    "imagen": "curso-particulares",
+    "alt": "Dos personas repasando un cuaderno en una mesa, vistas desde arriba, solo se ven las manos",
+    "destacado": false,
+    "descripcion": "Una clase a la semana solo para ti, en la materia que necesites. Ideal si buscas un ritmo totalmente personalizado."
+  }
+]
