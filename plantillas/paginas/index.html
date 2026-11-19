@@ -1,0 +1,74 @@
+    <section class="hero">
+      <div class="contenedor hero__rejilla">
+        <div class="hero__texto">
+          <p class="antetitulo">{{lema}} en {{direccion_localidad}}</p>
+          <h1>Aquí nadie se queda atrás</h1>
+          <p class="entradilla">Grupos de máximo {{max_alumnos}} alumnos, profesorado titulado y un informe de progreso cada trimestre. Para Primaria, ESO, Bachillerato y adultos.</p>
+          <div class="botones">
+            <a class="boton boton--acento" href="{{raiz}}contacto.html#clase-prueba">Pide tu clase de prueba</a>
+            <a class="boton boton--borde" href="{{raiz}}cursos.html">Ver cursos y cuotas</a>
+          </div>
+          <p class="nota">La primera clase es gratis y sin compromiso.</p>
+        </div>
+        <img class="hero__imagen" src="{{raiz}}img/portada.svg" alt="Aula pequeña y luminosa con una mesa de estudio, libros y una lámpara" width="1200" height="800" fetchpriority="high">
+      </div>
+    </section>
+
+    <section class="seccion" aria-labelledby="titulo-por-que">
+      <div class="contenedor">
+        <h2 id="titulo-por-que" class="seccion__titulo">Por qué elegir Academia Faro</h2>
+        <ul class="ventajas">
+          <li class="ventaja">
+            <h3>Grupos reducidos</h3>
+            <p>Como máximo {{max_alumnos}} alumnos por grupo. Así tu profesor o profesora tiene tiempo para ti.</p>
+          </li>
+          <li class="ventaja">
+            <h3>Seguimiento personal</h3>
+            <p>Cada trimestre enviamos a las familias un informe de progreso.</p>
+          </li>
+          <li class="ventaja">
+            <h3>Profesorado titulado</h3>
+            <p>Con experiencia en el nivel que enseña: de Primaria a Bachillerato y adultos.</p>
+          </li>
+          <li class="ventaja">
+            <h3>Clase de prueba gratis</h3>
+            <p>Ven a conocernos antes de decidir. Sin compromiso.</p>
+          </li>
+          <li class="ventaja">
+            <h3>Inglés y Cambridge</h3>
+            <p>Grupos del A1 al C1 y preparación para el examen oficial B2 First.</p>
+          </li>
+          <li class="ventaja">
+            <h3>Ambiente cercano</h3>
+            <p>Una academia de barrio donde te conocemos por tu nombre.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="seccion seccion--clara" aria-labelledby="titulo-cursos">
+      <div class="contenedor">
+        <h2 id="titulo-cursos" class="seccion__titulo">Cursos destacados</h2>
+        <ul class="tarjetas">
+{{cursos_destacados}}
+        </ul>
+        <p class="centrado"><a class="boton boton--borde" href="{{raiz}}cursos.html">Ver los 6 cursos y sus cuotas</a></p>
+      </div>
+    </section>
+
+    <section class="seccion" aria-labelledby="titulo-testimonios">
+      <div class="contenedor">
+        <h2 id="titulo-testimonios" class="seccion__titulo">Lo que dicen las familias</h2>
+        <ul class="testimonios">
+{{testimonios}}
+        </ul>
+      </div>
+    </section>
+
+    <section class="llamada">
+      <div class="contenedor llamada__caja">
+        <h2>¿Empezamos con una clase de prueba?</h2>
+        <p>Es gratis y sin compromiso. Te escuchamos y te recomendamos el grupo que mejor encaja contigo.</p>
+        <a class="boton boton--acento" href="{{raiz}}contacto.html#clase-prueba">Pide tu clase de prueba</a>
+      </div>
+    </section>

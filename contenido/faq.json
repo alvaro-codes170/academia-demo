@@ -1,0 +1,22 @@
+[
+  {
+    "pregunta": "¿Cuántos alumnos hay por grupo?",
+    "respuesta": "Como máximo 8."
+  },
+  {
+    "pregunta": "¿Puedo probar antes de matricularme?",
+    "respuesta": "Sí, la primera clase es gratuita y sin compromiso."
+  },
+  {
+    "pregunta": "¿Hay descuento por hermanos?",
+    "respuesta": "Sí, un 10 % en la cuota del segundo alumno y siguientes."
+  },
+  {
+    "pregunta": "¿Cómo sé cómo va mi hijo o hija?",
+    "respuesta": "Enviamos un informe de progreso cada trimestre."
+  },
+  {
+    "pregunta": "¿Preparáis exámenes de Cambridge?",
+    "respuesta": "Sí, ofrecemos preparación de B2 First."
+  }
+]

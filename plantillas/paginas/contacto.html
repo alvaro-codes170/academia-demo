@@ -1,0 +1,46 @@
+    <section class="cabecera-pagina">
+      <div class="contenedor">
+        <h1>Contacto</h1>
+        <p class="entradilla">Estamos en {{direccion_localidad}}. Llámanos, escríbenos por WhatsApp o ven a vernos en horario de atención.</p>
+      </div>
+    </section>
+
+    <section class="seccion" aria-label="Datos de contacto">
+      <div class="contenedor contacto">
+        <div class="contacto__datos">
+          <h2>Datos de contacto</h2>
+          <dl class="datos">
+            <dt>Dirección</dt>
+            <dd>{{direccion_calle}}, {{direccion_cp}} {{direccion_localidad}}</dd>
+            <dt>Teléfono</dt>
+            <dd><a href="tel:{{telefono_enlace}}">{{telefono}}</a></dd>
+            <dt>WhatsApp</dt>
+            <dd><a href="{{whatsapp_enlace}}" rel="noopener">{{whatsapp}}</a></dd>
+            <dt>Correo</dt>
+            <dd><a href="mailto:{{correo}}">{{correo}}</a></dd>
+            <dt>Instagram</dt>
+            <dd>{{instagram}}</dd>
+          </dl>
+
+          <h2>Horario de atención</h2>
+{{horario_atencion}}
+          <h2>Horario de clases</h2>
+{{horario_clases}}
+        </div>
+        <div class="contacto__imagenes">
+          <img src="{{raiz}}img/mapa.svg" alt="Plano de situación de la academia en la Calle de la Luz (imagen de marcador de posición)" width="1200" height="800" loading="lazy" decoding="async">
+          <img src="{{raiz}}img/contacto.svg" alt="Entrada de la academia con una puerta de cristal y un cartel" width="1200" height="800" loading="lazy" decoding="async">
+        </div>
+      </div>
+    </section>
+
+    <section class="seccion seccion--clara" id="clase-prueba" aria-labelledby="titulo-prueba">
+      <div class="contenedor contenedor--estrecho">
+        <h2 id="titulo-prueba" class="seccion__titulo">Pide tu clase de prueba</h2>
+        <p>La primera clase es gratis y sin compromiso. Muy pronto podrás pedirla desde aquí con un formulario. Mientras tanto, llámanos o escríbenos por WhatsApp y te respondemos en horario de atención.</p>
+        <div class="botones">
+          <a class="boton boton--acento" href="tel:{{telefono_enlace}}">Llamar al {{telefono}}</a>
+          <a class="boton boton--borde" href="{{whatsapp_enlace}}" rel="noopener">Escribir por WhatsApp</a>
+        </div>
+      </div>
+    </section>

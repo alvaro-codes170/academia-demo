@@ -1,0 +1,41 @@
+    <section class="cabecera-pagina">
+      <div class="contenedor">
+        <h1>Cursos y cuotas</h1>
+        <p class="entradilla">Seis cursos para Primaria, ESO, Bachillerato y adultos. Todos los grupos tienen como máximo {{max_alumnos}} alumnos.</p>
+      </div>
+    </section>
+
+    <section class="seccion" aria-label="Lista de cursos">
+      <div class="contenedor">
+        <ul class="fichas">
+{{fichas_cursos}}
+        </ul>
+      </div>
+    </section>
+
+    <section class="seccion seccion--clara" aria-labelledby="titulo-condiciones">
+      <div class="contenedor">
+        <h2 id="titulo-condiciones" class="seccion__titulo">Condiciones</h2>
+        <ul class="condiciones">
+          <li><strong>Matrícula anual: {{matricula}}</strong>, {{matricula_nota}}.</li>
+          <li><strong>Descuento por hermanos: {{descuento}}</strong> en la cuota del segundo alumno y siguientes.</li>
+          <li><strong>Primera clase de prueba: gratis</strong> y sin compromiso.</li>
+        </ul>
+        <p class="nota">Los precios son orientativos y se confirman al matricularse. IVA no aplicable.</p>
+      </div>
+    </section>
+
+    <section class="seccion" aria-labelledby="titulo-faq">
+      <div class="contenedor contenedor--estrecho">
+        <h2 id="titulo-faq" class="seccion__titulo">Preguntas frecuentes</h2>
+{{faq}}
+      </div>
+    </section>
+
+    <section class="llamada">
+      <div class="contenedor llamada__caja">
+        <h2>¿No sabes qué curso elegir?</h2>
+        <p>Cuéntanos qué necesitas y te recomendamos el grupo adecuado.</p>
+        <a class="boton boton--acento" href="{{raiz}}contacto.html#clase-prueba">Pide tu clase de prueba</a>
+      </div>
+    </section>
