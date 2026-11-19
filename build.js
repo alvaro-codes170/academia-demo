@@ -278,6 +278,8 @@ generarPagina({
 escribir(path.join(SALIDA, 'sitemap.xml'), seo.sitemap(paraSitemap));
 escribir(path.join(SALIDA, 'feed.xml'), seo.feed(publicados, negocio));
 escribir(path.join(SALIDA, 'robots.txt'), seo.robots(URL_SITIO));
+// Le dice a GitHub Pages que publique los archivos tal cual, sin procesarlos con Jekyll.
+escribir(path.join(SALIDA, '.nojekyll'), '');
 
 // ---------- Resumen en la terminal ----------
 console.log(`Fecha de referencia: ${HOY}`);
