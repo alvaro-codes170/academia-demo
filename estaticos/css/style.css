@@ -375,7 +375,8 @@ fieldset[aria-invalid="true"] .opciones { outline: 2px solid #B3261E; outline-of
 .pagina-404 { padding-block: 3rem 4rem; text-align: center; }
 .pagina-404__codigo {
   font-family: var(--fuente-titulos); font-weight: 800; line-height: 1;
-  font-size: clamp(5rem, 25vw, 9rem); color: var(--amarillo); margin: 0 0 .5rem;
+  font-size: clamp(5rem, 25vw, 9rem); color: var(--azul); margin: 0 0 .5rem;
+  text-decoration: underline var(--amarillo) .12em; text-underline-offset: .12em;
 }
 .pagina-404 .entradilla { margin-inline: auto; }
 .pagina-404__enlaces {
@@ -393,7 +394,19 @@ fieldset[aria-invalid="true"] .opciones { outline: 2px solid #B3261E; outline-of
 .pie__titulo { color: var(--amarillo); font-size: 1.05rem; margin-bottom: .5rem; }
 .pie__lista li { padding: .15rem 0; }
 .pie .horario li { border-bottom-color: rgba(255, 255, 255, .15); }
-.pie__legal { border-top: 1px solid rgba(255, 255, 255, .15); padding-block: 1rem; margin: 1.5rem auto 0; font-size: .9rem; }
+.pie__legal {
+  border-top: 1px solid rgba(255, 255, 255, .15); padding-block: 1rem; margin: 1.5rem auto 0; font-size: .9rem;
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 1.5rem;
+}
+.pie__legal p { margin: 0; }
+.pie__enlaces-legales { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; }
+.pie__enlaces-legales a { display: inline-block; padding-block: .35rem; }
+
+/* Aviso en las plantillas legales */
+.aviso-plantilla {
+  background: var(--amarillo-claro); border-left: 5px solid var(--amarillo);
+  padding: .9rem 1.1rem; border-radius: 0 var(--radio-pequeno) var(--radio-pequeno) 0; font-size: 1rem;
+}
 
 /* ---------- 8. Barra fija de llamada y WhatsApp (solo móvil) ---------- */
 .barra-movil {

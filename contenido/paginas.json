@@ -31,5 +31,26 @@
     "descripcion": "Dirección, horario, teléfono y WhatsApp de Academia Faro en Villanueva del Faro. Pide tu clase de prueba gratuita y sin compromiso.",
     "scripts": ["js/config.js", "js/formulario.js"],
     "datos": ["organizacion"]
+  },
+  {
+    "id": "aviso-legal",
+    "plantilla": "aviso-legal.html",
+    "salida": "aviso-legal.html",
+    "titulo": "Aviso legal | Academia Faro",
+    "descripcion": "Aviso legal de la web de Academia Faro: datos del titular, condiciones de uso, propiedad intelectual y legislación aplicable."
+  },
+  {
+    "id": "privacidad",
+    "plantilla": "politica-privacidad.html",
+    "salida": "politica-privacidad.html",
+    "titulo": "Política de privacidad | Academia Faro",
+    "descripcion": "Cómo trata Academia Faro los datos del formulario de clase de prueba, con especial cuidado de los datos de menores, y cuánto tiempo los guarda."
+  },
+  {
+    "id": "cookies",
+    "plantilla": "politica-cookies.html",
+    "salida": "politica-cookies.html",
+    "titulo": "Política de cookies | Academia Faro",
+    "descripcion": "La web de Academia Faro no usa cookies. Te explicamos cómo contamos las visitas de forma anónima con un servicio de estadísticas sin cookies."
   }
 ]

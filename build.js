@@ -59,6 +59,13 @@ if (config.formspree.includes('TU_ID')) {
   console.warn('AVISO: el formulario no está conectado. Pon tu endpoint de Formspree en estaticos/js/config.js');
 }
 
+// Analítica sin cookies (GoatCounter). Solo se añade si hay un código válido en config.js.
+const codigoAnalitica = /^[a-z0-9-]+$/.test(config.goatcounter || '') && config.goatcounter !== 'TU_CODIGO' ? config.goatcounter : null;
+const ANALITICA = codigoAnalitica
+  ? `  <script data-goatcounter="https://${codigoAnalitica}.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>`
+  : '';
+if (!codigoAnalitica) console.warn('AVISO: la analítica está desactivada. Pon tu código de GoatCounter en estaticos/js/config.js');
+
 // ---------- 4. Qué artículos se publican ----------
 const { publicados, omitidos } = blog.clasificar(todos, HOY);
 const categorias = blog.categorias(publicados);
@@ -84,6 +91,7 @@ const datosComunes = {
   max_alumnos: escapar(negocio.condiciones.maxAlumnos),
   anio: HOY.slice(0, 4),
   formspree: escapar(config.formspree),
+  analitica: ANALITICA,
   horario_atencion: componentes.horario(negocio.horarioAtencion),
   horario_clases: componentes.horario(negocio.horarioClases),
 };
@@ -140,7 +148,7 @@ function metaSeo({ url, titulo, descripcion, og = {} }) {
     `<meta property="og:title" content="${escapar(og.titulo || titulo)}">`,
     `<meta property="og:description" content="${escapar(descripcion)}">`,
     `<meta property="og:url" content="${url}">`,
-    `<meta property="og:image" content="${IMAGEN_REDES}">`,
+    `<meta property="og:image" content="${og.imagen || IMAGEN_REDES}">`,
     `<meta property="og:image:width" content="1200">`,
     `<meta property="og:image:height" content="630">`,
     `<meta property="og:image:alt" content="${escapar(negocio.nombre)}: ${escapar(negocio.lema.toLowerCase())}">`,
@@ -176,6 +184,10 @@ for (const p of paginas) {
       testimonios: componentes.testimonios(testimonios),
       profesores: componentes.profesores(profesorado),
       ultimos_articulos: componentes.listaArticulos(publicados.slice(0, 3), raiz, alts, 'h3'),
+      img_portada: componentes.imagen('portada', alts.portada, raiz, { primera: true, tamano: 'portada', clase: 'hero__imagen' }),
+      img_profesorado: componentes.imagen('profesorado', alts.profesorado, raiz, { primera: true, tamano: 'mitad', clase: 'profesorado__imagen' }),
+      img_mapa: componentes.imagen('mapa', alts.mapa, raiz, { tamano: 'mitad' }),
+      img_contacto: componentes.imagen('contacto', alts.contacto, raiz, { tamano: 'mitad' }),
     }),
   });
 }
@@ -184,6 +196,8 @@ for (const p of paginas) {
 
 // 6a. Una página por artículo publicado: docs/blog/<nombre-del-archivo>/index.html
 for (const a of publicados) {
+  const fotoRedes = componentes.imagenRedes(a.imagen);
+  const imagenRedes = fotoRedes ? URL_SITIO + fotoRedes : IMAGEN_REDES;
   generarPagina({
     salida: `blog/${a.slug}/index.html`,
     menuActivo: 'blog',
@@ -191,8 +205,8 @@ for (const a of publicados) {
     descripcion: a.resumen,
     plantilla: 'articulo.html',
     fecha: a.fecha,
-    og: { tipo: 'article', titulo: a.titulo, fecha: a.fecha, seccion: a.categoria },
-    datos: [seo.blogPosting(a, negocio, `${URL_SITIO}blog/${a.slug}/`, IMAGEN_REDES)],
+    og: { tipo: 'article', titulo: a.titulo, fecha: a.fecha, seccion: a.categoria, imagen: imagenRedes },
+    datos: [seo.blogPosting(a, negocio, `${URL_SITIO}blog/${a.slug}/`, imagenRedes)],
     valores: (raiz) => ({
       titulo_articulo: escapar(a.titulo),
       categoria: escapar(a.categoria),
@@ -200,8 +214,7 @@ for (const a of publicados) {
       fecha: a.fecha,
       fecha_larga: blog.fechaLarga(a.fecha),
       minutos: String(a.minutos),
-      imagen: a.imagen,
-      imagen_alt: escapar(alts[a.imagen] || ''),
+      imagen_articulo: componentes.imagen(a.imagen, alts[a.imagen] || '', raiz, { primera: true, tamano: 'articulo', clase: 'articulo__imagen' }),
       cuerpo: a.html,
       relacionados: componentes.relacionados(blog.relacionados(a, publicados), raiz, alts),
     }),
@@ -223,7 +236,7 @@ function generarListado({ lista, base, actual, titulo, entradilla, descripcion }
         blog_titulo: escapar(titulo) + escapar(sufijo),
         blog_entradilla: escapar(entradilla),
         categorias: componentes.navCategorias(categorias, publicados.length, actual, raiz),
-        articulos: componentes.listaArticulos(pagina.articulos, raiz, alts, 'h2'),
+        articulos: componentes.listaArticulos(pagina.articulos, raiz, alts, 'h2', true),
         paginacion: componentes.paginacion(pagina, raiz),
       }),
     });
@@ -265,6 +278,8 @@ generarPagina({
 escribir(path.join(SALIDA, 'sitemap.xml'), seo.sitemap(paraSitemap));
 escribir(path.join(SALIDA, 'feed.xml'), seo.feed(publicados, negocio));
 escribir(path.join(SALIDA, 'robots.txt'), seo.robots(URL_SITIO));
+// Le dice a GitHub Pages que publique los archivos tal cual, sin procesarlos con Jekyll.
+escribir(path.join(SALIDA, '.nojekyll'), '');
 
 // ---------- Resumen en la terminal ----------
 console.log(`Fecha de referencia: ${HOY}`);

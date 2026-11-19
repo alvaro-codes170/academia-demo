@@ -28,8 +28,42 @@ function horario(lista) {
 const horasTexto = (h) => (h === 1 ? '1 hora a la semana' : `${h} horas a la semana`);
 const cuotaTexto = (c) => `${c} €/mes`;
 
-function imagenCurso(curso, raiz) {
-  return `<img src="${raiz}img/${curso.imagen}.svg" alt="${escapar(curso.alt)}" width="1200" height="800" loading="lazy" decoding="async">`;
+// ---------- Imágenes ----------
+// Si scripts/imagenes.js ha creado versiones WebP de una foto, las usamos con
+// srcset (el navegador elige el tamaño según la pantalla). Si no, el SVG.
+const fs = require('fs');
+const path = require('path');
+const RUTA_WEBP = path.join(__dirname, '..', '..', 'contenido', 'imagenes-webp.json');
+const fotosWebp = fs.existsSync(RUTA_WEBP) ? JSON.parse(fs.readFileSync(RUTA_WEBP, 'utf8')) : {};
+
+// Ancho con el que se muestra cada tipo de imagen (para "sizes")
+const TAMANOS = {
+  portada: '(min-width: 900px) 520px, calc(100vw - 2rem)',
+  tarjeta: '(min-width: 1120px) 340px, (min-width: 900px) 30vw, (min-width: 640px) 45vw, calc(100vw - 2rem)',
+  mitad: '(min-width: 1120px) 540px, (min-width: 900px) 48vw, calc(100vw - 2rem)',
+  articulo: '(min-width: 780px) 740px, calc(100vw - 2rem)',
+};
+
+// "lazy" retrasa la carga hasta que la imagen se acerca a la pantalla.
+// La primera imagen visible de una página NO debe ser lazy (es lo que mide el LCP).
+const carga = (primera) => (primera ? 'fetchpriority="high"' : 'loading="lazy" decoding="async"');
+
+function imagen(nombre, alt, raiz, { primera = false, tamano = 'tarjeta', clase = '' } = {}) {
+  const claseAttr = clase ? ` class="${clase}"` : '';
+  const foto = fotosWebp[nombre];
+  if (!foto) {
+    return `<img${claseAttr} src="${raiz}img/${nombre}.svg" alt="${escapar(alt)}" width="1200" height="800" ${carga(primera)}>`;
+  }
+  const srcset = foto.anchos.map((a) => `${raiz}img/${nombre}-${a}.webp ${a}w`).join(', ');
+  const media = foto.anchos.find((a) => a >= 800) || foto.ancho;
+  return `<img${claseAttr} src="${raiz}img/${nombre}-${media}.webp" srcset="${srcset}" sizes="${TAMANOS[tamano]}" alt="${escapar(alt)}" width="${foto.ancho}" height="${foto.alto}" ${carga(primera)}>`;
+}
+
+// Imagen para compartir en redes: la de la foto si existe, si no la genérica.
+const imagenRedes = (nombre) => (fotosWebp[nombre] ? `img/${nombre}-og.jpg` : null);
+
+function imagenCurso(curso, raiz, primera = false, tamano = 'tarjeta') {
+  return imagen(curso.imagen, curso.alt, raiz, { primera, tamano });
 }
 
 // Tarjetas pequeñas para la página de inicio (solo los cursos destacados).
@@ -47,8 +81,8 @@ function cursosDestacados(cursos, raiz) {
 
 // Fichas completas para la página de cursos.
 function fichasCursos(cursos, raiz) {
-  return cursos.map((c) => `          <li class="ficha" id="${c.id}">
-            ${imagenCurso(c, raiz)}
+  return cursos.map((c, i) => `          <li class="ficha" id="${c.id}">
+            ${imagenCurso(c, raiz, i === 0, 'mitad')}
             <div class="ficha__cuerpo">
               <h2>${escapar(c.nombre)}</h2>
               <p class="ficha__nivel">${escapar(c.nivel)}</p>
@@ -100,9 +134,9 @@ function profesores(lista) {
 const { fechaLarga } = require('./blog');
 
 // Tarjeta de un artículo. "nivel" es el título: h2 en el listado, h3 en otras secciones.
-function tarjetaArticulo(a, raiz, alts, nivel = 'h2') {
+function tarjetaArticulo(a, raiz, alts, nivel = 'h2', primera = false) {
   return `          <li class="articulo-tarjeta">
-            <img src="${raiz}img/${a.imagen}.svg" alt="${escapar(alts[a.imagen] || '')}" width="1200" height="800" loading="lazy" decoding="async">
+            ${imagen(a.imagen, alts[a.imagen] || '', raiz, { primera })}
             <div class="articulo-tarjeta__cuerpo">
               <p class="articulo-tarjeta__meta"><a href="${raiz}blog/categoria/${a.categoriaSlug}/">${escapar(a.categoria)}</a> · <time datetime="${a.fecha}">${fechaLarga(a.fecha)}</time> · ${a.minutos} min</p>
               <${nivel}><a href="${raiz}blog/${a.slug}/">${escapar(a.titulo)}</a></${nivel}>
@@ -111,8 +145,9 @@ function tarjetaArticulo(a, raiz, alts, nivel = 'h2') {
           </li>`;
 }
 
-function listaArticulos(lista, raiz, alts, nivel) {
-  return lista.map((a) => tarjetaArticulo(a, raiz, alts, nivel)).join('\n');
+// "primeraVisible": true en el listado del blog, donde la primera tarjeta se ve al entrar.
+function listaArticulos(lista, raiz, alts, nivel, primeraVisible = false) {
+  return lista.map((a, i) => tarjetaArticulo(a, raiz, alts, nivel, primeraVisible && i === 0)).join('\n');
 }
 
 // Enlaces a "Todos" y a cada categoría, con el número de artículos.
@@ -154,6 +189,7 @@ ${listaArticulos(lista, raiz, alts, 'h3')}
 }
 
 module.exports = {
+  imagen, imagenRedes,
   menu, horario, cursosDestacados, fichasCursos, faq, testimonios, profesores,
   listaArticulos, navCategorias, paginacion, relacionados,
 };
