@@ -1,24 +1,43 @@
 // build.js: genera la web completa en la carpeta docs/.
-// Uso: node build.js
+//
+// Uso:
+//   node build.js                     (usa la fecha de hoy)
+//   node build.js --fecha=2026-11-19  (simula otra fecha)
 //
 // Qué hace, paso a paso:
-//   1. Vacía docs/ para empezar de cero.
-//   2. Copia estaticos/ (CSS, imágenes...) dentro de docs/.
-//   3. Lee los datos de contenido/ (JSON).
-//   4. Para cada página de contenido/paginas.json:
-//      rellena su plantilla, la mete dentro de base.html junto con
-//      la cabecera y el pie, y guarda el HTML final en docs/.
+//   1. Decide la fecha de referencia ("hoy" o la de --fecha).
+//   2. Vacía docs/ y copia dentro estaticos/ (CSS, imágenes...).
+//   3. Lee los datos de contenido/ (JSON) y los artículos (Markdown).
+//   4. Separa los artículos publicados de los borradores y programados.
+//   5. Genera las páginas fijas (inicio, cursos, profesorado, contacto).
+//   6. Genera el blog: una página por artículo, el listado de 4 en 4
+//      y una página por categoría.
 
 const path = require('path');
 const { leerJSON, vaciarCarpeta, copiarCarpeta, escribir, rutaRaiz, escapar } = require('./scripts/lib/utilidades');
 const { leerPlantilla, rellenar } = require('./scripts/lib/plantillas');
 const componentes = require('./scripts/lib/componentes');
+const blog = require('./scripts/lib/blog');
 
 const RAIZ = __dirname;
 const SALIDA = path.join(RAIZ, 'docs');
 const CONTENIDO = path.join(RAIZ, 'contenido');
 
-// ---------- 1 y 2. Preparar la carpeta de salida ----------
+// ---------- 1. Fecha de referencia ----------
+function fechaDeHoy() {
+  const d = new Date(); // fecha local del ordenador, no la de Londres (UTC)
+  const dos = (n) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${dos(d.getMonth() + 1)}-${dos(d.getDate())}`;
+}
+
+const argFecha = process.argv.find((a) => a.startsWith('--fecha='));
+const HOY = argFecha ? argFecha.split('=')[1] : fechaDeHoy();
+if (!blog.esFechaValida(HOY)) {
+  console.error(`La fecha "${HOY}" no es válida. Ejemplo correcto: node build.js --fecha=2026-11-19`);
+  process.exit(1);
+}
+
+// ---------- 2. Preparar la carpeta de salida ----------
 vaciarCarpeta(SALIDA);
 copiarCarpeta(path.join(RAIZ, 'estaticos'), SALIDA);
 
@@ -29,6 +48,12 @@ const faq = leerJSON(path.join(CONTENIDO, 'faq.json'));
 const profesorado = leerJSON(path.join(CONTENIDO, 'profesorado.json'));
 const testimonios = leerJSON(path.join(CONTENIDO, 'testimonios.json'));
 const paginas = leerJSON(path.join(CONTENIDO, 'paginas.json'));
+const alts = leerJSON(path.join(CONTENIDO, 'imagenes.json'));
+const todos = blog.leerArticulos(path.join(CONTENIDO, 'blog'));
+
+// ---------- 4. Qué artículos se publican ----------
+const { publicados, omitidos } = blog.clasificar(todos, HOY);
+const categorias = blog.categorias(publicados);
 
 // Datos del negocio que pueden usar todas las plantillas como {{nombre}}.
 const datosComunes = {
@@ -49,40 +74,129 @@ const datosComunes = {
   matricula_nota: escapar(negocio.condiciones.matriculaNota),
   descuento: escapar(negocio.condiciones.descuentoHermanos),
   max_alumnos: escapar(negocio.condiciones.maxAlumnos),
-  anio: String(new Date().getFullYear()),
+  anio: HOY.slice(0, 4),
   horario_atencion: componentes.horario(negocio.horarioAtencion),
   horario_clases: componentes.horario(negocio.horarioClases),
 };
 
-// Monta una página completa: contenido + cabecera + pie dentro de base.html.
-function generarPagina({ id, plantilla, salida, titulo, descripcion }) {
+// Monta una página completa y la guarda en docs/.
+//   salida:      ruta del archivo dentro de docs/ (ej. "blog/pagina/2/index.html")
+//   menuActivo:  qué enlace del menú se marca
+//   plantilla:   archivo de plantillas/paginas/
+//   valores:     huecos propios de esa página (función que recibe "raiz")
+const generadas = [];
+function generarPagina({ salida, menuActivo, titulo, descripcion, plantilla, valores = () => ({}) }) {
   const raiz = rutaRaiz(salida);
-
-  // Los bloques que dependen de "raiz" (rutas relativas) se crean aquí.
-  const valores = {
+  const todosLosValores = {
     ...datosComunes,
     raiz,
     titulo: escapar(titulo),
     descripcion: escapar(descripcion),
-    menu: componentes.menu(id, raiz),
-    cursos_destacados: componentes.cursosDestacados(cursos, raiz),
-    fichas_cursos: componentes.fichasCursos(cursos, raiz),
-    faq: componentes.faq(faq),
-    testimonios: componentes.testimonios(testimonios),
-    profesores: componentes.profesores(profesorado),
+    menu: componentes.menu(menuActivo, raiz),
+    ...valores(raiz),
   };
 
-  const contenido = rellenar(leerPlantilla(`paginas/${plantilla}`), valores, plantilla);
-  const cabecera = rellenar(leerPlantilla('parciales/cabecera.html'), valores, 'cabecera.html');
-  const pie = rellenar(leerPlantilla('parciales/pie.html'), valores, 'pie.html');
+  const contenido = rellenar(leerPlantilla(`paginas/${plantilla}`), todosLosValores, plantilla);
+  const cabecera = rellenar(leerPlantilla('parciales/cabecera.html'), todosLosValores, 'cabecera.html');
+  const pie = rellenar(leerPlantilla('parciales/pie.html'), todosLosValores, 'pie.html');
+  const html = rellenar(leerPlantilla('base.html'), { ...todosLosValores, contenido, cabecera, pie }, 'base.html');
 
-  const html = rellenar(leerPlantilla('base.html'), { ...valores, contenido, cabecera, pie }, 'base.html');
   escribir(path.join(SALIDA, salida), html);
-  return salida;
+  generadas.push(salida);
 }
 
-// ---------- 4. Generar las páginas ----------
-const generadas = paginas.map(generarPagina);
+// ---------- 5. Páginas fijas ----------
+for (const p of paginas) {
+  generarPagina({
+    salida: p.salida,
+    menuActivo: p.id,
+    titulo: p.titulo,
+    descripcion: p.descripcion,
+    plantilla: p.plantilla,
+    valores: (raiz) => ({
+      cursos_destacados: componentes.cursosDestacados(cursos, raiz),
+      fichas_cursos: componentes.fichasCursos(cursos, raiz),
+      faq: componentes.faq(faq),
+      testimonios: componentes.testimonios(testimonios),
+      profesores: componentes.profesores(profesorado),
+      ultimos_articulos: componentes.listaArticulos(publicados.slice(0, 3), raiz, alts, 'h3'),
+    }),
+  });
+}
 
-console.log(`Web generada en docs/ (${generadas.length} páginas):`);
-generadas.forEach((p) => console.log('  - ' + p));
+// ---------- 6. Blog ----------
+
+// 6a. Una página por artículo publicado: docs/blog/<nombre-del-archivo>/index.html
+for (const a of publicados) {
+  generarPagina({
+    salida: `blog/${a.slug}/index.html`,
+    menuActivo: 'blog',
+    titulo: `${a.titulo} | Blog de ${negocio.nombre}`,
+    descripcion: a.resumen,
+    plantilla: 'articulo.html',
+    valores: (raiz) => ({
+      titulo_articulo: escapar(a.titulo),
+      categoria: escapar(a.categoria),
+      categoria_slug: a.categoriaSlug,
+      fecha: a.fecha,
+      fecha_larga: blog.fechaLarga(a.fecha),
+      minutos: String(a.minutos),
+      imagen: a.imagen,
+      imagen_alt: escapar(alts[a.imagen] || ''),
+      cuerpo: a.html,
+      relacionados: componentes.relacionados(blog.relacionados(a, publicados), raiz, alts),
+    }),
+  });
+}
+
+// 6b. Listados paginados (el general y uno por categoría).
+function generarListado({ lista, base, actual, titulo, entradilla, descripcion }) {
+  for (const pagina of blog.paginar(lista, base)) {
+    const sufijo = pagina.numero > 1 ? `, página ${pagina.numero}` : '';
+    generarPagina({
+      salida: pagina.salida,
+      menuActivo: 'blog',
+      titulo: `${titulo}${sufijo} | ${negocio.nombre}`,
+      descripcion: descripcion + (pagina.numero > 1 ? ` Página ${pagina.numero}.` : ''),
+      plantilla: 'blog.html',
+      valores: (raiz) => ({
+        blog_titulo: escapar(titulo) + escapar(sufijo),
+        blog_entradilla: escapar(entradilla),
+        categorias: componentes.navCategorias(categorias, publicados.length, actual, raiz),
+        articulos: componentes.listaArticulos(pagina.articulos, raiz, alts, 'h2'),
+        paginacion: componentes.paginacion(pagina, raiz),
+      }),
+    });
+  }
+}
+
+generarListado({
+  lista: publicados,
+  base: 'blog',
+  actual: null,
+  titulo: 'Blog',
+  entradilla: 'Consejos de estudio, idiomas y ideas para familias, escritos por el equipo de la academia.',
+  descripcion: 'Blog de Academia Faro: consejos para estudiar mejor, aprender idiomas y acompañar a tus hijos en el curso.',
+});
+
+for (const c of categorias) {
+  generarListado({
+    lista: c.articulos,
+    base: `blog/categoria/${c.slug}`,
+    actual: c.slug,
+    titulo: `Blog: ${c.nombre}`,
+    entradilla: `Artículos de la categoría ${c.nombre}.`,
+    descripcion: `Artículos del blog de Academia Faro sobre ${c.nombre.toLowerCase()}: consejos prácticos y sencillos del equipo de la academia.`,
+  });
+}
+
+// ---------- Resumen en la terminal ----------
+console.log(`Fecha de referencia: ${HOY}`);
+console.log(`Artículos publicados: ${publicados.length}`);
+publicados.forEach((a) => console.log(`  ✓ ${a.fecha}  [${a.categoria}]  ${a.titulo}  (${a.minutos} min)`));
+if (omitidos.length) {
+  console.log(`Artículos NO publicados: ${omitidos.length}`);
+  omitidos.forEach((a) => console.log(`  ✗ ${a.fecha}  ${a.titulo}  → ${a.motivo}`));
+}
+console.log(`Categorías: ${categorias.map((c) => `${c.nombre} (${c.articulos.length})`).join(', ')}`);
+console.log(`Páginas generadas en docs/: ${generadas.length}`);
