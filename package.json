@@ -1,0 +1,13 @@
+{
+  "name": "academia-demo",
+  "private": true,
+  "description": "Web de Academia Faro (cliente ficticio): generador estático en Node sin dependencias en el navegador.",
+  "scripts": {
+    "build": "node build.js",
+    "check": "node scripts/check.js",
+    "imagenes": "node scripts/imagenes.js"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.5"
+  }
+}

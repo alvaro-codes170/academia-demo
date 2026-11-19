@@ -4,9 +4,10 @@
 - HTML, CSS y JavaScript sencillos en el navegador. Sin frameworks ni librerías.
 - Node.js solo para los scripts: `build.js` (genera la web) y `scripts/check.js` (revisa la calidad).
 - Sin dependencias de npm: el lector de Markdown es un módulo propio y pequeño.
+- Única excepción: `sharp` (devDependency) para `scripts/imagenes.js`, que convierte las fotos de `contenido/fotos/` a WebP. Solo se usa en local; nunca llega al navegador.
 
 ## Carpetas
-- `contenido/`: los textos (artículos del blog en Markdown y datos en JSON: cursos, profesorado, FAQ).
+- `contenido/`: los textos (artículos del blog en Markdown y datos en JSON: cursos, profesorado, FAQ) y las fotos originales en `contenido/fotos/`.
 - `plantillas/`: las plantillas HTML (cabecera, pie, páginas y artículo).
 - `scripts/`: el script check.js y los módulos de apoyo de build.js.
 - `estaticos/`: CSS, JS del navegador, imágenes y config.js.

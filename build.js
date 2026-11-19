@@ -148,7 +148,7 @@ function metaSeo({ url, titulo, descripcion, og = {} }) {
     `<meta property="og:title" content="${escapar(og.titulo || titulo)}">`,
     `<meta property="og:description" content="${escapar(descripcion)}">`,
     `<meta property="og:url" content="${url}">`,
-    `<meta property="og:image" content="${IMAGEN_REDES}">`,
+    `<meta property="og:image" content="${og.imagen || IMAGEN_REDES}">`,
     `<meta property="og:image:width" content="1200">`,
     `<meta property="og:image:height" content="630">`,
     `<meta property="og:image:alt" content="${escapar(negocio.nombre)}: ${escapar(negocio.lema.toLowerCase())}">`,
@@ -184,6 +184,10 @@ for (const p of paginas) {
       testimonios: componentes.testimonios(testimonios),
       profesores: componentes.profesores(profesorado),
       ultimos_articulos: componentes.listaArticulos(publicados.slice(0, 3), raiz, alts, 'h3'),
+      img_portada: componentes.imagen('portada', alts.portada, raiz, { primera: true, tamano: 'portada', clase: 'hero__imagen' }),
+      img_profesorado: componentes.imagen('profesorado', alts.profesorado, raiz, { primera: true, tamano: 'mitad', clase: 'profesorado__imagen' }),
+      img_mapa: componentes.imagen('mapa', alts.mapa, raiz, { tamano: 'mitad' }),
+      img_contacto: componentes.imagen('contacto', alts.contacto, raiz, { tamano: 'mitad' }),
     }),
   });
 }
@@ -192,6 +196,8 @@ for (const p of paginas) {
 
 // 6a. Una página por artículo publicado: docs/blog/<nombre-del-archivo>/index.html
 for (const a of publicados) {
+  const fotoRedes = componentes.imagenRedes(a.imagen);
+  const imagenRedes = fotoRedes ? URL_SITIO + fotoRedes : IMAGEN_REDES;
   generarPagina({
     salida: `blog/${a.slug}/index.html`,
     menuActivo: 'blog',
@@ -199,8 +205,8 @@ for (const a of publicados) {
     descripcion: a.resumen,
     plantilla: 'articulo.html',
     fecha: a.fecha,
-    og: { tipo: 'article', titulo: a.titulo, fecha: a.fecha, seccion: a.categoria },
-    datos: [seo.blogPosting(a, negocio, `${URL_SITIO}blog/${a.slug}/`, IMAGEN_REDES)],
+    og: { tipo: 'article', titulo: a.titulo, fecha: a.fecha, seccion: a.categoria, imagen: imagenRedes },
+    datos: [seo.blogPosting(a, negocio, `${URL_SITIO}blog/${a.slug}/`, imagenRedes)],
     valores: (raiz) => ({
       titulo_articulo: escapar(a.titulo),
       categoria: escapar(a.categoria),
@@ -208,8 +214,7 @@ for (const a of publicados) {
       fecha: a.fecha,
       fecha_larga: blog.fechaLarga(a.fecha),
       minutos: String(a.minutos),
-      imagen: a.imagen,
-      imagen_alt: escapar(alts[a.imagen] || ''),
+      imagen_articulo: componentes.imagen(a.imagen, alts[a.imagen] || '', raiz, { primera: true, tamano: 'articulo', clase: 'articulo__imagen' }),
       cuerpo: a.html,
       relacionados: componentes.relacionados(blog.relacionados(a, publicados), raiz, alts),
     }),
